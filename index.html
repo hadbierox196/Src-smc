@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sargodha Medical College SRC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7D00B6;
+            --secondary: #5A00A3;
+            --accent: #9D4EDD;
+            --text: #FFFFFF;
+            --background: #0F0F1E;
+            --card-bg: rgba(125, 0, 182, 0.2);
+            --gradient: linear-gradient(135deg, #7D00B6, #5A00A3);
+            --gradient-light: linear-gradient(135deg, #9D4EDD, #7D00B6);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Barlow', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(15, 15, 30, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar.scrolled {
+            background: rgba(93, 0, 146, 0.9);
+            padding: 15px 5%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: var(--text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png') center/cover no-repeat;
+            filter: brightness(0.4);
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .hero-content.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient-light);
+            color: var(--text);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta-button:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+
+        .cta-button:hover:after {
+            left: 120%;
+        }
+
+        /* Domain Boxes */
+        .section {
+            padding: 100px 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .section-header.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .domain-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 30px;
+            padding: 20px 0 40px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .domain-container.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .domain-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .domain-card {
+            scroll-snap-align: start;
+            min-width: 300px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+
+        .domain-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-light);
+        }
+
+        .domain-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .domain-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .domain-card p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .domain-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .domain-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.4);
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .faq-container.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 20px 60px 20px 25px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .faq-question:after {
+            content: '+';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-question:after {
+            content: '-';
+            transform: translateY(-50%) rotate(0);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+
+        /* News Section */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .news-container.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .news-image {
+            height: 200px;
+            background: var(--gradient-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .read-more:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .read-more:hover:after {
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 15, 30, 0.9);
+            padding: 80px 5% 40px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            color: var(--text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .scroll-top {
+            position: absolute;
+            right: 40px;
+            top: -25px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        [data-aos] {
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .aos-fade {
+            opacity: 0;
+        }
+
+        .aos-fade.animate {
+            opacity: 1;
+        }
+
+        .aos-slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .aos-slide-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .aos-slide-left {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .aos-slide-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .aos-slide-right {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .aos-slide-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 70px 5%;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .domain-card {
+                min-width: 260px;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background: var(--background);
+            z-index: 2000;
+            padding: 100px 30px 30px;
+            transition: var(--transition);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-menu .social-icons {
+            margin-top: 40px;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="Sargodha Medical College Logo">
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Apply Now</a>
+            <a href="#">FAQs</a>
+            <a href="#">News</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="close-menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Apply Now</a>
+            <a href="#">FAQs</a>
+            <a href="#">News</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sargodha Medical College</h1>
+            <p>Excellence in Medical Education and Healthcare Innovation</p>
+            <button class="cta-button">View More</button>
+        </div>
+    </section>
+
+    <!-- Domain Boxes Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Our Domains</h2>
+            <p>Explore our specialized departments and programs</p>
+        </div>
+        <div class="domain-container">
+            <div class="domain-card">
+                <h3>Cardiology</h3>
+                <p>Advanced cardiac care with cutting-edge technology and expert specialists.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+            <div class="domain-card">
+                <h3>Neurology</h3>
+                <p>Comprehensive neurological services and innovative research programs.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+            <div class="domain-card">
+                <h3>Pediatrics</h3>
+                <p>Specialized care for infants, children, and adolescents.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+            <div class="domain-card">
+                <h3>Oncology</h3>
+                <p>Advanced cancer treatment with multidisciplinary approach.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+            <div class="domain-card">
+                <h3>Orthopedics</h3>
+                <p>Expert care for musculoskeletal conditions and injuries.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+            <div class="domain-card">
+                <h3>Dermatology</h3>
+                <p>Comprehensive skin care and cosmetic treatments.</p>
+                <a href="#" class="domain-btn">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common queries about our programs</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">How do I apply for the MBBS program?</div>
+                <div class="faq-answer">
+                    <p>Applications for the MBBS program are accepted through our online portal. You'll need to submit your academic transcripts, entrance exam scores, and a personal statement. The application period typically opens in January each year.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What are the scholarship opportunities?</div>
+                <div class="faq-answer">
+                    <p>We offer merit-based scholarships covering up to 100% of tuition fees for outstanding students. Need-based financial aid is also available. Detailed information can be found in the financial aid section of our website.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What facilities are available on campus?</div>
+                <div class="faq-answer">
+                    <p>Our campus features state-of-the-art laboratories, a comprehensive medical library, modern lecture halls, student accommodation, sports facilities, and a teaching hospital with over 500 beds.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is hostel accommodation available?</div>
+                <div class="faq-answer">
+                    <p>Yes, we provide separate hostel facilities for male and female students. The hostels are equipped with modern amenities including Wi-Fi, study rooms, recreational areas, and 24/7 security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Latest News</h2>
+            <p>Stay updated with our recent activities and achievements</p>
+        </div>
+        <div class="news-container">
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                    <div class="news-date">August 5, 2025</div>
+                    <h3>New Research Center Inaugurated</h3>
+                    <p>Our state-of-the-art research facility was inaugurated today, focusing on innovative medical solutions.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                    <div class="news-date">July 28, 2025</div>
+                    <h3>Medical Conference 2025</h3>
+                    <p>Annual medical conference hosted with participation from over 30 countries and 200 institutions.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                    <div class="news-date">July 15, 2025</div>
+                    <h3>Student Achievements</h3>
+                    <p>Our students secured top positions in the National Medical Olympiad for the third consecutive year.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <p>Sargodha Medical College is committed to excellence in medical education, research, and healthcare services since 1985.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <p><a href="#">Admissions</a></p>
+                <p><a href="#">Programs</a></p>
+                <p><a href="#">Faculty</a></p>
+                <p><a href="#">Research</a></p>
+                <p><a href="#">Contact Us</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> University Road, Sargodha</p>
+                <p><i class="fas fa-phone"></i> +92 48 3720400</p>
+                <p><i class="fas fa-envelope"></i> official.srcsmc@gmail.com</p>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates and news.</p>
+                <form>
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: rgba(255,255,255,0.1); color: white;">
+                    <button type="submit" style="background: var(--gradient); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="scroll-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        <div class="copyright">
+            © 2025 Sargodha Medical College SRC. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Simple Intersection Observer for animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero animation
+            setTimeout(() => {
+                document.querySelector('.hero-content').classList.add('animate');
+            }, 300);
+            
+            // Initialize Intersection Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements
+            const animatedElements = document.querySelectorAll('.section-header, .domain-container, .faq-container, .news-container');
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+            
+            // FAQ accordion
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentNode;
+                    faqItem.classList.toggle('active');
+                });
+            });
+            
+            // Scroll to top button
+            const scrollTopBtn = document.querySelector('.scroll-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    scrollTopBtn.classList.add('visible');
+                    document.querySelector('.navbar').classList.add('scrolled');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                    document.querySelector('.navbar').classList.remove('scrolled');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const closeMenuBtn = document.querySelector('.close-menu');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+            
+            // Domain cards tilt effect
+            const domainCards = document.querySelectorAll('.domain-card');
+            domainCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angleY = (x - centerX) / 25;
+                    const angleX = (centerY - y) / 25;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+            
+            // View More button animation
+            const ctaButton = document.querySelector('.cta-button');
+            ctaButton.addEventListener('click', function() {
+                const moreContent = document.createElement('div');
+                moreContent.innerHTML = `
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px; text-align: left;">
+                        <h3 style="color: var(--accent); margin-bottom: 15px;">About Our College</h3>
+                        <p>Sargodha Medical College is a premier institution dedicated to excellence in medical education, research, and healthcare. Established in 1985, we have been training world-class medical professionals for nearly four decades.</p>
+                        <p style="margin-top: 10px;">Our 500-bed teaching hospital provides comprehensive healthcare services while serving as a training ground for our students.</p>
+                    </div>
+     `;
+                this.insertAdjacentElement('afterend', moreContent);
+                moreContent.style.opacity = '0';
+                moreContent.style.transform = 'translateY(20px)';
+                moreContent.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    moreContent.style.opacity = '1';
+                    moreContent.style.transform = 'translateY(0)';
+                }, 50);
+                
+                this.textContent = 'View Less';
+                this.removeEventListener('click', arguments.callee);
+                this.addEventListener('click', function() {
+                    moreContent.style.opacity = '0';
+                    moreContent.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        moreContent.remove();
+                        this.textContent = 'View More';
+                        this.addEventListener('click', arguments.callee);
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
