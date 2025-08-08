@@ -3,132 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sargodha Medical College SRC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <title>SMC SRC | Student Representative Council</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
     <style>
         :root {
             --primary: #7D00B6;
-            --secondary: #5A00A3;
-            --accent: #9D4EDD;
-            --text: #FFFFFF;
-            --background: #0F0F1E;
-            --card-bg: rgba(125, 0, 182, 0.2);
-            --gradient: linear-gradient(135deg, #7D00B6, #5A00A3);
-            --gradient-light: linear-gradient(135deg, #9D4EDD, #7D00B6);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --transition: all 0.3s ease;
+            --primary-light: #9D45C5;
+            --secondary: #5A0D8C;
+            --dark: #1A1A1A;
+            --light: #F5F5F5;
+            --gradient: linear-gradient(135deg, #7D00B6 0%, #5A0D8C 100%);
+            --gradient-hover: linear-gradient(135deg, #8D15C6 0%, #6B1DA4 100%);
+            --shadow: 0 4px 20px rgba(125, 0, 182, 0.15);
+            --shadow-hover: 0 8px 30px rgba(125, 0, 182, 0.25);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--background);
-            color: var(--text);
+            color: var(--dark);
+            background: white;
             overflow-x: hidden;
-            line-height: 1.6;
         }
-
-        h1, h2, h3, h4, h5 {
+        
+        h1, h2, h3, h4 {
             font-family: 'Barlow', sans-serif;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
-        /* Navigation */
+        
+        /* Navigation Bar */
         .navbar {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            background: rgba(15, 15, 30, 0.8);
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
         }
-
+        
         .navbar.scrolled {
-            background: rgba(93, 0, 146, 0.9);
-            padding: 15px 5%;
+            padding: 10px 5%;
+            background: rgba(125, 0, 182, 0.95);
         }
-
+        
+        .navbar.scrolled .nav-links a, 
+        .navbar.scrolled .email,
+        .navbar.scrolled .social-icons a {
+            color: white;
+        }
+        
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
         }
-
-        .logo img {
-            height: 40px;
+        
+        .navbar.scrolled .logo {
+            color: white;
         }
-
+        
+        .email {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 30px;
         }
-
-        .nav-links a {
-            color: var(--text);
+            .nav-links a {
             text-decoration: none;
+            color: var(--dark);
             font-weight: 500;
             position: relative;
-            padding: 5px 0;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
-
-        .nav-links a:after {
+        
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--text);
-            transition: var(--transition);
+            background: var(--primary);
+            transition: width 0.3s ease;
         }
-
-        .nav-links a:hover:after {
+        
+        .nav-links a:hover::after {
             width: 100%;
         }
-
+        
         .social-icons {
             display: flex;
             gap: 15px;
         }
-
+        
         .social-icons a {
-            color: var(--text);
+            color: var(--primary);
             font-size: 1.2rem;
-            transition: var(--transition);
+            transition: transform 0.3s ease;
         }
-
+        
         .social-icons a:hover {
             transform: translateY(-3px);
-            color: var(--accent);
         }
-
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
         /* Hero Section */
         .hero {
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%;
             position: relative;
-            overflow: hidden;
-            padding: 0 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            overflow: hidden;
         }
-
+        
         .hero::before {
             content: '';
             position: absolute;
@@ -137,10 +153,9 @@
             width: 100%;
             height: 100%;
             background: url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png') center/cover no-repeat;
-            filter: brightness(0.4);
-            z-index: -1;
+            z-index: -2;
         }
-
+        
         .hero::after {
             content: '';
             position: absolute;
@@ -149,463 +164,469 @@
             width: 100%;
             height: 100%;
             background: var(--gradient);
-            opacity: 0.8;
+            opacity: 0.85;
             z-index: -1;
         }
-
+        
         .hero-content {
             max-width: 800px;
-            z-index: 2;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease;
+            padding: 0 20px;
+            z-index: 1;
         }
-
-        .hero-content.animate {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .college-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
         }
-
+        
+        .college-logo img {
+            width: 100px;
+            height: auto;
+        }
+        
         .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
-
+        
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 30px;
             max-width: 600px;
-            margin: 0 auto 30px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
+        
         .cta-button {
             display: inline-block;
-            background: var(--gradient-light);
-            color: var(--text);
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
+            padding: 12px 35px;
+            background: white;
+            color: var(--primary);
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            transition: var(--transition);
             position: relative;
             overflow: hidden;
-            border: none;
-            cursor: pointer;
         }
-
+        
         .cta-button:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: var(--shadow-hover);
         }
-
-        .cta-button:after {
+        
+        .cta-button::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(25deg);
-            transition: all 0.6s;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(125, 0, 182, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
         }
-
-        .cta-button:hover:after {
-            left: 120%;
+        
+        .cta-button:hover::after {
+            width: 300px;
+            height: 300px;
         }
-
+        
         /* Domain Boxes */
-        .section {
-            padding: 100px 5%;
-        }
-
-        .section-header {
+        .section-title {
             text-align: center;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
-        }
-
-        .section-header.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-header h2 {
+            margin: 80px 0 40px;
+            color: var(--primary);
             font-size: 2.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
+            position: relative;
         }
-
-        .domain-container {
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .domains-container {
+            padding: 20px 0 60px;
+            overflow-x: hidden;
+        }
+        
+        .domains-scroll {
             display: flex;
+            padding: 20px 0;
             overflow-x: auto;
-            gap: 30px;
-            padding: 20px 0 40px;
             scroll-snap-type: x mandatory;
             scrollbar-width: none;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s ease 0.2s;
+            gap: 30px;
+            padding: 0 5% 30px;
         }
-
-        .domain-container.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .domain-container::-webkit-scrollbar {
+        
+        .domains-scroll::-webkit-scrollbar {
             display: none;
         }
-
+        
         .domain-card {
             scroll-snap-align: start;
             min-width: 300px;
-            background: var(--card-bg);
+            background: white;
             border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(157, 78, 221, 0.3);
         }
-
-        .domain-card:before {
+        
+        .domain-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: var(--gradient-light);
+            height: 8px;
+            background: var(--gradient);
         }
-
+        
         .domain-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: var(--shadow-hover);
         }
-
+        
         .domain-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: var(--accent);
+            color: var(--primary);
         }
-
+        
         .domain-card p {
             margin-bottom: 20px;
-            font-size: 0.95rem;
+            color: #555;
+            flex-grow: 1;
         }
-
+        
         .domain-btn {
+            display: inline-block;
+            padding: 8px 20px;
             background: var(--gradient);
             color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
             text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-block;
-            transition: var(--transition);
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            align-self: flex-start;
         }
-
+        
         .domain-btn:hover {
+            background: var(--gradient-hover);
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.4);
         }
-
-        /* FAQ Section */
+        
+        /* FAQs Section */
+        .faqs-section {
+            background: #F9F6FC;
+            padding: 80px 5%;
+        }
+        
         .faq-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
         }
-
-        .faq-container.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .faq-item {
-            background: var(--card-bg);
+        
+        .faq-card {
+            background: white;
             border-radius: 15px;
             margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(157, 78, 221, 0.3);
-            transition: var(--transition);
-        }
-
-        .faq-item:hover {
-            transform: translateY(-5px);
             box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-
+        
+        .faq-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
         .faq-question {
-            padding: 20px 60px 20px 25px;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             cursor: pointer;
-            position: relative;
             font-weight: 600;
             font-size: 1.1rem;
         }
-
-        .faq-question:after {
-            content: '+';
-            position: absolute;
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            transition: var(--transition);
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
         }
-
-        .faq-item.active .faq-question:after {
-            content: '-';
-            transform: translateY(-50%) rotate(0);
-        }
-
+        
         .faq-answer {
             padding: 0 25px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease, padding 0.5s ease;
+            transition: all 0.4s ease;
+            color: #555;
+            line-height: 1.6;
         }
-
-        .faq-item.active .faq-answer {
+        
+        .faq-card.active .faq-answer {
             padding: 0 25px 25px;
             max-height: 500px;
         }
-
+        
+        .faq-card.active .faq-question i {
+            transform: rotate(45deg);
+        }
+        
         /* News Section */
-        .news-container {
+        .news-section {
+            padding: 80px 5%;
+        }
+        
+        .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        .news-container.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        
         .news-card {
-            background: var(--card-bg);
-            border-radius: 20px;
+            background: white;
+            border-radius: 15px;
             overflow: hidden;
-            transition: var(--transition);
-            border: 1px solid rgba(157, 78, 221, 0.3);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
-
+        
         .news-card:hover {
             transform: translateY(-10px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-hover);
         }
-
-        .news-image {
+        
+        .news-img {
             height: 200px;
-            background: var(--gradient-light);
-            position: relative;
-            overflow: hidden;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
         }
-
+        
         .news-content {
             padding: 25px;
         }
-
+        
         .news-date {
-            color: var(--accent);
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
             font-size: 0.9rem;
+        }
+        
+        .news-title {
+            font-size: 1.3rem;
             margin-bottom: 10px;
         }
-
-        .news-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+        
+        .news-excerpt {
+            color: #555;
+            margin-bottom: 20px;
         }
-
+        
         .read-more {
             display: inline-block;
-            color: var(--accent);
+            color: var(--primary);
             text-decoration: none;
-            margin-top: 15px;
-            font-weight: 600;
+            font-weight: 500;
             position: relative;
         }
-
-        .read-more:after {
+        
+        .read-more::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -3px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent);
-            transition: var(--transition);
+            background: var(--primary);
+            transition: width 0.3s ease;
         }
-
-        .read-more:hover:after {
+        
+        .read-more:hover::after {
             width: 100%;
         }
-
+        
         /* Footer */
         footer {
-            background: rgba(15, 15, 30, 0.9);
-            padding: 80px 5% 40px;
-            position: relative;
+            background: var(--dark);
+            color: white;
+            padding: 80px 5% 30px;
         }
-
+        
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
-            margin-bottom: 50px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
         }
-
+        
         .footer-column h3 {
-            color: var(--accent);
+            font-size: 1.4rem;
             margin-bottom: 20px;
-            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
         }
-
-        .footer-column p {
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            opacity: 0.8;
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            }
+            .footer-column p {
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
-
+        
         .footer-social {
             display: flex;
             gap: 15px;
             margin-top: 20px;
         }
-
+        
         .footer-social a {
-            color: var(--text);
-            font-size: 1.2rem;
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
         }
-
+        
         .footer-social a:hover {
-            color: var(--accent);
+            background: var(--primary);
             transform: translateY(-3px);
         }
-
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
         .scroll-top {
-            position: absolute;
-            right: 40px;
-            top: -25px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
             width: 50px;
             height: 50px;
-            background: var(--gradient-light);
+            background: var(--gradient);
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
             opacity: 0;
-            transform: translateY(20px);
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 999;
         }
-
+        
         .scroll-top.visible {
             opacity: 1;
-            transform: translateY(0);
+            visibility: visible;
         }
-
+        
         .scroll-top:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            opacity: 0.7;
+        
+        /* Admin Panel Button */
+        .admin-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--gradient);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            z-index: 999;
+            transition: all 0.3s ease;
         }
-
-        /* Animations */
-        [data-aos] {
-            transition: opacity 0.8s, transform 0.8s;
+        
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
-
-        .aos-fade {
-            opacity: 0;
-        }
-
-        .aos-fade.animate {
-            opacity: 1;
-        }
-
-        .aos-slide-up {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .aos-slide-up.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .aos-slide-left {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-
-        .aos-slide-left.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .aos-slide-right {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-
-        .aos-slide-right.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Responsive */
+        
+        /* Responsive Design */
         @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
             .nav-links {
                 display: none;
             }
             
-            .mobile-menu-btn {
+            .menu-toggle {
                 display: block;
             }
-        }
-
-        @media (max-width: 768px) {
+            
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
             
-            .section {
-                padding: 70px 5%;
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px;
             }
             
-            .section-header h2 {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
                 font-size: 2rem;
             }
             
@@ -613,238 +634,170 @@
                 grid-template-columns: 1fr;
             }
         }
-
+        
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
+            .email {
+                display: none;
             }
             
-            .domain-card {
-                min-width: 260px;
+            .hero h1 {
+                font-size: 1.8rem;
             }
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            height: 100vh;
-            background: var(--background);
-            z-index: 2000;
-            padding: 100px 30px 30px;
-            transition: var(--transition);
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mobile-menu .social-icons {
-            margin-top: 40px;
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+        <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">
-            <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="Sargodha Medical College Logo">
-        </div>
+        <a href="#" class="logo">SMC SRC</a>
+        <div class="email">official.srcsmc@gmail.com</div>
         <div class="nav-links">
             <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Apply Now</a>
-            <a href="#">FAQs</a>
-            <a href="#">News</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#news">News</a>
         </div>
         <div class="social-icons">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <button class="mobile-menu-btn">
+        <div class="menu-toggle">
             <i class="fas fa-bars"></i>
-        </button>
+        </div>
     </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <button class="close-menu">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Apply Now</a>
-            <a href="#">FAQs</a>
-            <a href="#">News</a>
-        </div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
-    </div>
-
+    
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Sargodha Medical College</h1>
-            <p>Excellence in Medical Education and Healthcare Innovation</p>
-            <button class="cta-button">View More</button>
+            <div class="college-logo">
+                <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC Logo">
+            </div>
+            <h1 data-aos="fade-up">Sargodha Medical College</h1>
+            <p data-aos="fade-up" data-aos-delay="100">Student Representative Council - Empowering the future of healthcare</p>
+            <a href="#about" class="cta-button" data-aos="fade-up" data-aos-delay="200">View More</a>
         </div>
     </section>
-
-    <!-- Domain Boxes Section -->
-    <section class="section">
-        <div class="section-header">
-            <h2>Our Domains</h2>
-            <p>Explore our specialized departments and programs</p>
-        </div>
-        <div class="domain-container">
-            <div class="domain-card">
-                <h3>Cardiology</h3>
-                <p>Advanced cardiac care with cutting-edge technology and expert specialists.</p>
+    
+    <!-- Domain Boxes -->
+    <section class="domains-container">
+        <h2 class="section-title" data-aos="fade-up">Our Domains</h2>
+        <div class="domains-scroll">
+            <div class="domain-card" data-aos="fade-right">
+                <h3>Academic Affairs</h3>
+                <p>Supporting students in academic matters, organizing workshops, and facilitating faculty-student communication.</p>
                 <a href="#" class="domain-btn">Apply Now</a>
             </div>
-            <div class="domain-card">
-                <h3>Neurology</h3>
-                <p>Comprehensive neurological services and innovative research programs.</p>
+            <div class="domain-card" data-aos="fade-right" data-aos-delay="100">
+                <h3>Sports & Recreation</h3>
+                <p>Organizing sports events, tournaments, and recreational activities for student wellness.</p>
                 <a href="#" class="domain-btn">Apply Now</a>
             </div>
-            <div class="domain-card">
-                <h3>Pediatrics</h3>
-                <p>Specialized care for infants, children, and adolescents.</p>
+            <div class="domain-card" data-aos="fade-right" data-aos-delay="200">
+                <h3>Cultural Events</h3>
+                <p>Planning and executing cultural festivals, talent shows, and creative competitions.</p>
                 <a href="#" class="domain-btn">Apply Now</a>
             </div>
-            <div class="domain-card">
-                <h3>Oncology</h3>
-                <p>Advanced cancer treatment with multidisciplinary approach.</p>
+            <div class="domain-card" data-aos="fade-right" data-aos-delay="300">
+                <h3>Health & Wellness</h3>
+                <p>Promoting student health through awareness campaigns and wellness programs.</p>
                 <a href="#" class="domain-btn">Apply Now</a>
             </div>
-            <div class="domain-card">
-                <h3>Orthopedics</h3>
-                <p>Expert care for musculoskeletal conditions and injuries.</p>
-                <a href="#" class="domain-btn">Apply Now</a>
-            </div>
-            <div class="domain-card">
-                <h3>Dermatology</h3>
-                <p>Comprehensive skin care and cosmetic treatments.</p>
+            <div class="domain-card" data-aos="fade-right" data-aos-delay="400">
+                <h3>Community Outreach</h3>
+                <p>Organizing medical camps, health awareness drives, and community service activities.</p>
                 <a href="#" class="domain-btn">Apply Now</a>
             </div>
         </div>
     </section>
-
-    <!-- FAQ Section -->
-    <section class="section">
-        <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Find answers to common queries about our programs</p>
-        </div>
+    
+    <!-- FAQs Section -->
+    <section class="faqs-section" id="faqs">
+        <h2 class="section-title" data-aos="fade-up">Frequently Asked Questions</h2>
         <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">How do I apply for the MBBS program?</div>
+            <div class="faq-card" data-aos="fade-up">
+                <div class="faq-question">
+                    How do I join a committee? <i class="fas fa-plus"></i>
+                </div>
                 <div class="faq-answer">
-                    <p>Applications for the MBBS program are accepted through our online portal. You'll need to submit your academic transcripts, entrance exam scores, and a personal statement. The application period typically opens in January each year.</p>
+                    <p>To join a committee, visit our "Domains" section and click "Apply Now" on the committee you're interested in. Fill out the application form and our team will contact you.</p>
                 </div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">What are the scholarship opportunities?</div>
+            <div class="faq-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-question">
+                    When are SRC elections held? <i class="fas fa-plus"></i>
+                </div>
                 <div class="faq-answer">
-                    <p>We offer merit-based scholarships covering up to 100% of tuition fees for outstanding students. Need-based financial aid is also available. Detailed information can be found in the financial aid section of our website.</p>
+                    <p>SRC elections are held annually in the first week of October. All registered students are eligible to vote for their representatives.</p>
                 </div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">What facilities are available on campus?</div>
+            <div class="faq-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-question">
+                    How can I report an issue to the SRC? <i class="fas fa-plus"></i>
+                </div>
                 <div class="faq-answer">
-                    <p>Our campus features state-of-the-art laboratories, a comprehensive medical library, modern lecture halls, student accommodation, sports facilities, and a teaching hospital with over 500 beds.</p>
+                    <p>You can report issues via email at official.srcsmc@gmail.com, through our suggestion box in the cafeteria, or by contacting any SRC representative directly.</p>
                 </div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">Is hostel accommodation available?</div>
+            <div class="faq-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="faq-question">
+                    Does the SRC organize orientation for new students? <i class="fas fa-plus"></i>
+                </div>
                 <div class="faq-answer">
-                    <p>Yes, we provide separate hostel facilities for male and female students. The hostels are equipped with modern amenities including Wi-Fi, study rooms, recreational areas, and 24/7 security.</p>
+                    <p>Yes, the SRC organizes a comprehensive orientation program for all new students at the beginning of the academic year to help them adjust to college life.</p>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- News Section -->
-    <section class="section">
-        <div class="section-header">
-            <h2>Latest News</h2>
-            <p>Stay updated with our recent activities and achievements</p>
-        </div>
-        <div class="news-container">
-            <div class="news-card">
-                <div class="news-image"></div>
+    <section class="news-section" id="news">
+        <h2 class="section-title" data-aos="fade-up">Latest News</h2>
+        <div class="news-grid">
+            <div class="news-card" data-aos="fade-up">
+                <div class="news-img">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">August 15, 2025</div>
+                    <h3 class="news-title">Annual Sports Gala 2025</h3>
+                    <p class="news-excerpt">Registration for the Annual Sports Gala is now open. Participate in cricket, football, basketball and more!</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="news-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="news-img">
+                    <i class="fas fa-book-medical"></i>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">August 10, 2025</div>
+                    <h3 class="news-title">Medical Camp in Rural Area</h3>
+                    <p class="news-excerpt">SRC organizing a free medical camp in nearby village this weekend. Volunteers needed!</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+            <div class="news-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="news-img">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
                 <div class="news-content">
                     <div class="news-date">August 5, 2025</div>
-                    <h3>New Research Center Inaugurated</h3>
-                    <p>Our state-of-the-art research facility was inaugurated today, focusing on innovative medical solutions.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-image"></div>
-                <div class="news-content">
-                    <div class="news-date">July 28, 2025</div>
-                    <h3>Medical Conference 2025</h3>
-                    <p>Annual medical conference hosted with participation from over 30 countries and 200 institutions.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-image"></div>
-                <div class="news-content">
-                    <div class="news-date">July 15, 2025</div>
-                    <h3>Student Achievements</h3>
-                    <p>Our students secured top positions in the National Medical Olympiad for the third consecutive year.</p>
+                    <h3 class="news-title">New Research Grant Opportunities</h3>
+                    <p class="news-excerpt">Funding available for student research projects. Application deadline: September 30th.</p>
                     <a href="#" class="read-more">Read More →</a>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>About Us</h3>
-                <p>Sargodha Medical College is committed to excellence in medical education, research, and healthcare services since 1985.</p>
+                <h3>About SRC</h3>
+                <p>The Student Representative Council serves as the voice of the student body, working to enhance the academic and social experience at Sargodha Medical College.</p>
                 <div class="footer-social">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -854,161 +807,132 @@
             </div>
             <div class="footer-column">
                 <h3>Quick Links</h3>
-                <p><a href="#">Admissions</a></p>
-                <p><a href="#">Programs</a></p>
-                <p><a href="#">Faculty</a></p>
-                <p><a href="#">Research</a></p>
-                <p><a href="#">Contact Us</a></p>
+                <p><a href="#" style="color: #bbb; text-decoration: none;">Home</a></p>
+                   <p><a href="#about" style="color: #bbb; text-decoration: none;">About Us</a></p>
+                <p><a href="#faqs" style="color: #bbb; text-decoration: none;">FAQs</a></p>
+                <p><a href="#news" style="color: #bbb; text-decoration: none;">News</a></p>
             </div>
             <div class="footer-column">
-                <h3>Contact Info</h3>
-                <p><i class="fas fa-map-marker-alt"></i> University Road, Sargodha</p>
-                <p><i class="fas fa-phone"></i> +92 48 3720400</p>
+                <h3>Contact Us</h3>
                 <p><i class="fas fa-envelope"></i> official.srcsmc@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +92 321 1234567</p>
+                <p><i class="fas fa-map-marker-alt"></i> Sargodha Medical College, University Road, Sargodha</p>
             </div>
             <div class="footer-column">
                 <h3>Newsletter</h3>
-                <p>Subscribe to our newsletter for the latest updates and news.</p>
+                <p>Subscribe to our newsletter for updates on events and opportunities.</p>
                 <form>
-                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: rgba(255,255,255,0.1); color: white;">
-                    <button type="submit" style="background: var(--gradient); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px;">
+                    <button type="submit" style="background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Subscribe</button>
                 </form>
             </div>
-        </div>
-        <div class="scroll-top">
-            <i class="fas fa-arrow-up"></i>
         </div>
         <div class="copyright">
             © 2025 Sargodha Medical College SRC. All Rights Reserved.
         </div>
     </footer>
-
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Admin Panel Button -->
+    <a href="admin.html" class="admin-btn">
+        Admin Panel
+    </a>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Simple Intersection Observer for animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hero animation
-            setTimeout(() => {
-                document.querySelector('.hero-content').classList.add('animate');
-            }, 300);
-            
-            // Initialize Intersection Observer
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.2
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
-                    }
-                });
-            }, observerOptions);
-            
-            // Observe elements
-            const animatedElements = document.querySelectorAll('.section-header, .domain-container, .faq-container, .news-container');
-            animatedElements.forEach(el => {
-                observer.observe(el);
-            });
-            
-            // FAQ accordion
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', () => {
-                    const faqItem = question.parentNode;
-                    faqItem.classList.toggle('active');
-                });
-            });
-            
-            // Scroll to top button
-            const scrollTopBtn = document.querySelector('.scroll-top');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 500) {
-                    scrollTopBtn.classList.add('visible');
-                    document.querySelector('.navbar').classList.add('scrolled');
-                } else {
-                    scrollTopBtn.classList.remove('visible');
-                    document.querySelector('.navbar').classList.remove('scrolled');
-                }
-            });
-            
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-            
-            // Mobile menu
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const closeMenuBtn = document.querySelector('.close-menu');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-            });
-            
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
-            
-            // Domain cards tilt effect
-            const domainCards = document.querySelectorAll('.domain-card');
-            domainCards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const angleY = (x - centerX) / 25;
-                    const angleX = (centerY - y) / 25;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-10px)`;
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-                });
-            });
-            
-            // View More button animation
-            const ctaButton = document.querySelector('.cta-button');
-            ctaButton.addEventListener('click', function() {
-                const moreContent = document.createElement('div');
-                moreContent.innerHTML = `
-                    <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px; text-align: left;">
-                        <h3 style="color: var(--accent); margin-bottom: 15px;">About Our College</h3>
-                        <p>Sargodha Medical College is a premier institution dedicated to excellence in medical education, research, and healthcare. Established in 1985, we have been training world-class medical professionals for nearly four decades.</p>
-                        <p style="margin-top: 10px;">Our 500-bed teaching hospital provides comprehensive healthcare services while serving as a training ground for our students.</p>
-                    </div>
-     `;
-                this.insertAdjacentElement('afterend', moreContent);
-                moreContent.style.opacity = '0';
-                moreContent.style.transform = 'translateY(20px)';
-                moreContent.style.transition = 'all 0.8s ease';
-                
-                setTimeout(() => {
-                    moreContent.style.opacity = '1';
-                    moreContent.style.transform = 'translateY(0)';
-                }, 50);
-                
-                this.textContent = 'View Less';
-                this.removeEventListener('click', arguments.callee);
-                this.addEventListener('click', function() {
-                    moreContent.style.opacity = '0';
-                    moreContent.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        moreContent.remove();
-                        this.textContent = 'View More';
-                        this.addEventListener('click', arguments.callee);
-                    }, 500);
-                });
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-out-quad'
+        });
+        
+        // Sticky Navbar
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll to Top Button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
+        
+        // FAQ Accordion
+        const faqCards = document.querySelectorAll('.faq-card');
+        faqCards.forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('active');
+            });
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero section parallax effect
+        gsap.to('.hero::before', {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            scale: 1.1,
+            ease: "none"
+        });
+        
+        // Domain cards animation
+        const domainCards = document.querySelectorAll('.domain-card');
+        domainCards.forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                x: 100,
+                opacity: 0,
+                duration: 0.8
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize GSAP scroll triggers
+        ScrollTrigger.refresh();
     </script>
 </body>
 </html>
