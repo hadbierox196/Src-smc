@@ -340,23 +340,26 @@
             background: white;
         }
 
-        .team-container { 
-            display: flex;
+        .team-container {       display: flex;
             gap: 2rem;
             overflow-x: auto;
             padding: 2rem 0;
             scroll-snap-type: x mandatory;
+      
 
         }
 
         .team-card {
-            background: white;
+            min-width: 300px;
+            background: linear-gradient(135deg, #7D00B6, #9D4EDD);
+            color: white;
+            padding: 2rem;
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(125, 0, 182, 0.1);
+            scroll-snap-align: start;
             transition: all 0.3s ease;
+            cursor: pointer;
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateX(50px);
         }
 
         .team-card.animate {
@@ -572,7 +575,7 @@
             margin: 0 auto;
         }
 
-        .news-grid {
+        .news-container {
             display: flex;
             gap: 2rem;
             overflow-x: auto;
@@ -582,16 +585,16 @@
         }
 
         .news-card { 
+            min-width: 300px;
             background: linear-gradient(135deg, #7D00B6, #9D4EDD);
             color: white;
+            padding: 2rem;
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(125, 0, 182, 0.2);
-            transition: all 0.4s ease;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            cursor: pointer;
             opacity: 0;
-            transform: translateY(30px);
-            animation: cardAppear 0.6s ease forwards;
-            animation-delay: calc(var(--delay) * 0.1s);
+            transform: translateX(50px);
         }
 
         @keyframes cardAppear {
@@ -890,7 +893,7 @@
     <!-- News Section - Enhanced purple cards -->
     <section class="news" id="news">
         <h2 class="section-title">Latest News & Updates</h2>
-        <div class="news-grid" id="newsGrid">
+        <div class="news-container" id="newsGrid">
             <div class="news-card" style="--delay: 0">
                 <div class="news-content">
                     <div class="news-date">August 8, 2025</div>
