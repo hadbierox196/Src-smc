@@ -340,12 +340,13 @@
             background: white;
         }
 
-        .team-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .team-container { 
+            display: flex;
             gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+
         }
 
         .team-card {
@@ -572,10 +573,12 @@
         }
 
         .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
             gap: 2rem;
-            margin-top: 3rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+        
         }
 
         .news-card { 
