@@ -1,196 +1,979 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SMC SRC - Sargodha Medical College</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    * {margin:0;padding:0;box-sizing:border-box;}
-    html {scroll-behavior:smooth;}
-    body {font-family:'Poppins',sans-serif;line-height:1.6;color:#333;overflow-x:hidden;}
-    
-    /* Navbar */
-    .navbar {
-      position: fixed;top: 0;width: 100%;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      padding: 1rem 2rem;
-      transition: all 0.3s ease;
-    }
-    .navbar.scrolled {background: rgba(125, 0, 182, 0.95);color: white;}
-    .nav-container {display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
-    .nav-email {font-size: 0.9rem;color: #7D00B6;}
-    .navbar.scrolled .nav-email {color: white;}
-    .nav-links {display:flex;gap:2rem;list-style:none;}
-    .nav-links a {text-decoration:none;color:#333;font-weight:500;transition:all 0.3s ease;position:relative;}
-    .navbar.scrolled .nav-links a {color: white;}
-    .nav-links a:hover {color:#7D00B6;transform:translateY(-2px);}
-    .navbar.scrolled .nav-links a:hover {color: #fff;}
-    .nav-links a::after {
-      content: '';position: absolute;bottom:-5px;left:0;width:0;height:2px;
-      background: linear-gradient(45deg,#7D00B6,#9D4EDD);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover::after {width:100%;}
-    .social-icons {display:flex;gap:1rem;}
-    .social-icons a {color:#7D00B6;font-size:1.2rem;transition:all 0.3s ease;}
-    .navbar.scrolled .social-icons a {color: white;}
-    .social-icons a:hover {transform:scale(1.2) rotate(5deg);color:#9D4EDD;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMC SRC - Sargodha Medical College</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Hero */
-    .hero {
-      height: 100vh;
-      background: linear-gradient(135deg, rgba(125,0,182,0.8), rgba(157,78,221,0.6)),
-        url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png');
-      background-size: cover;background-position:center;background-attachment: fixed;
-      display: flex;align-items:center;justify-content:center;
-      text-align: center;color: white;position: relative;
-    }
-    .hero-content {animation: fadeInUp 1s ease-out;}
-    .college-logo {width: 150px;height: 150px;margin: 0 auto 2rem;animation: zoomIn 1s ease-out 0.3s both;}
-    .hero h1 {font-family: 'Barlow', sans-serif;font-size: 3.5rem;font-weight: 700;margin-bottom: 1rem;animation: fadeInUp 1s ease-out 0.6s both;}
-    .hero p {font-size: 1.2rem;margin-bottom: 2rem;animation: fadeInUp 1s ease-out 0.9s both;}
-    .cta-button {
-      background: linear-gradient(45deg,#7D00B6,#9D4EDD);color: white;border: none;
-      padding: 15px 40px;font-size: 1.1rem;border-radius: 50px;cursor: pointer;
-      transition: all 0.3s ease;animation: fadeInUp 1s ease-out 1.2s both;position: relative;overflow: hidden;
-    }
-    .hero-description {
-      max-height: 0;overflow: hidden;transition: max-height 0.5s ease;
-      margin-top: 2rem;background: rgba(255, 255, 255, 0.1);backdrop-filter: blur(10px);
-      border-radius: 15px;padding: 0 2rem;
-    }
-    .hero-description.expanded {max-height: 200px;padding: 2rem;}
-    .hero-content.expanded {display: flex;align-items: center;justify-content: center;gap: 2rem;text-align: left;}
-    .hero-content.expanded .college-logo {width: 80px;height: 80px;margin: 0;}
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* News */
-    .news {padding: 5rem 2rem;background: white;max-width: 1200px;margin: 0 auto;}
-    .news-grid {display: grid;grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));gap: 2rem;margin-top: 3rem;}
-    .news-card {
-      background: linear-gradient(135deg, #7D00B6, #9D4EDD);color: white;border-radius: 15px;overflow: hidden;
-      transition: all 0.3s ease;opacity: 0;transform: translateY(50px);
-    }
-    .news-card.animate {opacity: 1;transform: translateY(0);}
-    .news-card img {width: 100%;height: auto;display: block;}
-    .news-content {padding: 1.5rem;}
-    .news-card:hover {transform: translateY(-10px);box-shadow: 0 15px 30px rgba(125,0,182,0.3);}
-  </style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(125, 0, 182, 0.95);
+            color: white;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-email {
+            font-size: 0.9rem;
+            color: #7D00B6;
+        }
+
+        .navbar.scrolled .nav-email {
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: white;
+        }
+
+        .nav-links a:hover {
+            color: #7D00B6;
+            transform: translateY(-2px);
+        }
+
+        .navbar.scrolled .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #7D00B6, #9D4EDD);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: #7D00B6;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled .social-icons a {
+            color: white;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2) rotate(5deg);
+            color: #9D4EDD;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(125, 0, 182, 0.8), rgba(157, 78, 221, 0.6)), url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .college-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            animation: zoomIn 1s ease-out 0.3s both;
+        }
+
+        .hero h1 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #7D00B6, #9D4EDD);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 1.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(125, 0, 182, 0.4);
+        }
+
+        .hero-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 0 2rem;
+        }
+
+        .hero-description.expanded {
+            max-height: 200px;
+            padding: 2rem;
+        }
+
+        /* Domain Boxes */
+        .domains {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-family: 'Barlow', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #7D00B6;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section-title.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .domains-container {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .domain-card {
+            min-width: 300px;
+            background: linear-gradient(135deg, #7D00B6, #9D4EDD);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .domain-card.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .domain-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(125, 0, 182, 0.3);
+        }
+
+        .domain-card h3 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .domain-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .apply-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background: white;
+            color: #7D00B6;
+            transform: scale(1.05);
+        }
+
+        /* FAQs */
+        .faqs {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .faq-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(125, 0, 182, 0.2);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #7D00B6;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding: 1.5rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #333, #7D00B6);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .footer.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Barlow', sans-serif;
+            margin-bottom: 1rem;
+            color: #9D4EDD;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: #9D4EDD;
+            transform: scale(1.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(45deg, #7D00B6, #9D4EDD);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(125, 0, 182, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .domains-container {
+                gap: 1rem;
+            }
+
+            .domain-card {
+                min-width: 250px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* News Section */
+        .news {
+            padding: 5rem 2rem;
+            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-card { 
+            min-width: 300px;
+            background: linear-gradient(135deg, #7D00B6, #9D4EDD);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(50px);
+
+        }
+
+        .news-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(125, 0, 182, 0.2);
+        }
+
+        .news-content {
+            padding: 2rem;
+        }
+
+        .news-date {
+            color: #7D00B6;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-title {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .news-excerpt {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-email">
+                <i class="fas fa-envelope"></i> official.srcsmc@gmail.com
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#faqs">FAQs</a></li>
+                <li><a href="#news">News</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </nav>
 
-<!-- Navbar -->
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <div class="nav-email">
-      <i class="fas fa-envelope"></i> official.srcsmc@gmail.com
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-      <li><a href="#faqs">FAQs</a></li>
-      <li><a href="#news">News</a></li>
-    </ul>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-    </div>
-  </div>
-</nav>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC Logo" class="college-logo">
+            <h1>Sargodha Medical College</h1>
+            <p>Excellence in Medical Education and Healthcare</p>
+            <button class="cta-button" onclick="toggleDescription()">View More</button>
+            <div class="hero-description" id="heroDescription">
+                <p>SMC SRC is committed to providing world-class medical education, fostering innovation in healthcare, and developing compassionate healthcare professionals who serve our community with dedication and excellence.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- Hero -->
-<section class="hero" id="home">
-  <div class="hero-content">
-    <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC Logo" class="college-logo">
-    <div>
-      <h1>Sargodha Medical College</h1>
-      <p>Excellence in Medical Education and Healthcare</p>
-      <button class="cta-button" onclick="toggleDescription()">View More</button>
-    </div>
-    <div class="hero-description" id="heroDescription">
-      <p>SMC SRC is committed to providing world-class medical education...</p>
-    </div>
-  </div>
-</section>
-<!-- Static FAQs -->
-<section class="faqs" id="faqs">
-  <h2 class="section-title">Frequently Asked Questions</h2>
+    <!-- Domain Boxes Section -->
+    <section class="domains" id="about">
+        <h2 class="section-title">Our Domains</h2>
+        <div class="domains-container">
+            <div class="domain-card">
+                <h3>MEDICAL EDUCATION</h3>
+                <p>Comprehensive medical programs designed to prepare future healthcare professionals with cutting-edge knowledge and practical skills.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>RESEARCH & DEVELOPMENT</h3>
+                <p>Advancing medical science through innovative research projects and collaboration with leading institutions worldwide.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>CLINICAL SERVICES</h3>
+                <p>Providing exceptional patient care through our state-of-the-art facilities and experienced medical professionals.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>COMMUNITY OUTREACH</h3>
+                <p>Engaging with local communities to promote health awareness and provide accessible healthcare services.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>STUDENT SERVICES</h3>
+                <p>Supporting our students with comprehensive services including counseling, career guidance, and academic support.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>INTERNATIONAL PROGRAMS</h3>
+                <p>Global partnerships and exchange programs to provide students with international exposure and experiences.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>CONTINUING EDUCATION</h3>
+                <p>Professional development programs for healthcare workers to stay updated with latest medical advancements.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>TECHNOLOGY INTEGRATION</h3>
+                <p>Leveraging cutting-edge technology to enhance learning experiences and improve healthcare delivery.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>WELLNESS PROGRAMS</h3>
+                <p>Promoting holistic wellness among students, faculty, and staff through comprehensive wellness initiatives.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+            <div class="domain-card">
+                <h3>ALUMNI NETWORK</h3>
+                <p>Maintaining strong connections with our graduates and leveraging their expertise for institutional growth.</p>
+                <button class="apply-btn">Apply Now</button>
+            </div>
+        </div>
+    </section>
+<!-- FAQs Section -->
+    <section class="faqs" id="faqs">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>What are the admission requirements for SMC?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Admission to SMC requires completion of intermediate education with pre-medical subjects (Biology, Chemistry, Physics) with a minimum 60% marks. Candidates must also pass the entrance examination and interview process.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>What facilities are available for students?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>SMC offers state-of-the-art laboratories, modern classrooms, a comprehensive library, hostel accommodation, sports facilities, and 24/7 medical services for all students.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>Are there scholarship opportunities available?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Yes, SMC offers various scholarship programs based on academic merit, financial need, and special achievements. Details are available in our admissions office.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>What is the duration of the medical program?</span>
+                <i class="fas fa-plus faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>The MBBS program at SMC is a 5-year degree program followed by a mandatory 1-year house job, making it a total of 6 years to complete medical education.</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="faq-item">
-    <div class="faq-question" onclick="toggleFAQ(this)">
-      <span>What courses do you offer?</span>
-      <i class="fas fa-plus faq-icon"></i>
-    </div>
-    <div class="faq-answer">
-      <p>We offer MBBS, BDS, Nursing, and various postgraduate medical courses.</p>
-    </div>
-  </div>
+    <!-- News Section -->
+    <section class="news" id="news">
+        <h2 class="section-title">Latest News & Updates</h2>
+        <div class="news-grid" id="newsGrid">
+            <!-- News items will be loaded dynamically from Firebase -->
+        </div>
+    </section>
 
-  <div class="faq-item">
-    <div class="faq-question" onclick="toggleFAQ(this)">
-      <span>How can I apply for admission?</span>
-      <i class="fas fa-plus faq-icon"></i>
-    </div>
-    <div class="faq-answer">
-      <p>Admissions are online through our official portal during the announced dates.</p>
-    </div>
-  </div>
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About SMC SRC</h3>
+                <p>Sargodha Medical College is committed to excellence in medical education, research, and healthcare services, nurturing the next generation of healthcare professionals.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p>Academic Programs<br>Admissions<br>Faculty<br>Research<br>Campus Life</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>University of Sargodha<br>Sargodha, Punjab, Pakistan<br>Phone: +92-48-9230811<br>Email: official.srcsmc@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <p>Student Portal<br>Faculty Portal<br>Library<br>Online Learning<br>Career Services</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Sargodha Medical College SRC. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-  <div class="faq-item">
-    <div class="faq-question" onclick="toggleFAQ(this)">
-      <span>Do you provide hostel facilities?</span>
-      <i class="fas fa-plus faq-icon"></i>
-    </div>
-    <div class="faq-answer">
-      <p>Yes, we provide on-campus hostel accommodation for both male and female students.</p>
-    </div>
-  </div>
-</section>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-<!-- News Section -->
-<section class="news" id="news">
-  <h2 class="section-title">Latest News & Updates</h2>
-  <div class="news-grid" id="newsGrid">
-    <!-- News items loaded from Firebase -->
-  </div>
-</section>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const scrollTop = document.getElementById('scrollTop');
+            
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                scrollTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                scrollTop.classList.remove('visible');
+            }
+        });
 
-<!-- Scripts -->
-<script>
-// Navbar hide/show on scroll
-let lastScrollTop = 0;
-window.addEventListener('scroll', function() {
-  let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-  const navbar = document.getElementById('navbar');
-  if (currentScroll > lastScrollTop && currentScroll > 100) {
-    navbar.style.top = '-80px'; // hide navbar
-  } else {
-    navbar.style.top = '0'; // show navbar
-  }
-  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-}, false);
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.section-title, .domain-card, .faq-item, .news-card, .footer');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate');
+                }
+            });
+        }
 
-// Toggle hero description
-function toggleDescription() {
-  const description = document.getElementById('heroDescription');
-  description.classList.toggle('expanded');
-  document.querySelector('.hero-content').classList.toggle('expanded');
-}
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
 
-// FAQ toggle
-function toggleFAQ(element) {
-  const faqItem = element.parentElement;
-  const answer = faqItem.querySelector('.faq-answer');
-  faqItem.classList.toggle('active');
-  answer.classList.toggle('active');
-}
-</script>
+        // Domain cards animation with delay
+        function animateDomainCards() {
+            const cards = document.querySelectorAll('.domain-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate');
+                }, index * 100);
+            });
+        }
 
+        window.addEventListener('scroll', function() {
+            const domainsSection = document.querySelector('.domains');
+            const rect = domainsSection.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                animateDomainCards();
+            }
+        }, { once: true });
+
+        // Toggle hero description
+        function toggleDescription() {
+            const description = document.getElementById('heroDescription');
+            description.classList.toggle('expanded');
+        }
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            
+            faqItem.classList.toggle('active');
+            answer.classList.toggle('active');
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize animations on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.section-title').classList.add('animate');
+            }, 500);
+            
+            // Initialize Firebase and load dynamic content
+            initializeFirebase();
+        });
+
+        // Firebase Configuration and Dynamic Content Loading
+        function initializeFirebase() {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyDF2wmnHZWwLsJ3H20FMdnyNSVE7UNPGUE",
+                authDomain: "srcsms-fbe25.firebaseapp.com",
+                databaseURL: "https://srcsms-fbe25-default-rtdb.firebaseio.com",
+                projectId: "srcsms-fbe25",
+                storageBucket: "srcsms-fbe25.firebasestorage.app",
+                messagingSenderId: "1085257788571",
+                appId: "1:1085257788571:web:19f9d4f327868d1cdfaa3e",
+                measurementId: "G-HJD1DPLCXR"
+            };
+
+            // Load Firebase modules dynamically
+            import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js')
+                .then(({ initializeApp }) => {
+                    const app = initializeApp(firebaseConfig);
+                    
+                    // Load database module
+                    return import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+                })
+                .then(({ getDatabase, ref, onValue }) => {
+                    const database = getDatabase();
+                    
+                    // Load news from Firebase
+                    loadNewsFromFirebase(database, ref, onValue);
+                    
+                    // Load FAQs from Firebase
+                    loadFAQsFromFirebase(database, ref, onValue);
+                })
+                .catch(error => {
+                    console.log('Firebase not available, using static content:', error);
+                    loadStaticNews();
+                    loadStaticFAQs();
+                });
+        }
+
+        // Load news from Firebase
+        function loadNewsFromFirebase(database, ref, onValue) {
+            const newsRef = ref(database, 'news');
+            onValue(newsRef, (snapshot) => {
+                const newsGrid = document.getElementById('newsGrid');
+                newsGrid.innerHTML = '';
+                
+                const news = snapshot.val();
+                if (news) {
+                    // Sort news by timestamp (newest first)
+                    const sortedNews = Object.keys(news)
+                        .map(key => ({id: key, ...news[key]}))
+                        .sort((a, b) => b.timestamp - a.timestamp)
+                        .slice(0, 6); // Show only latest 6 news items
+                    
+                    sortedNews.forEach((item, index) => {
+                        const newsCard = createNewsCard(item, index);
+                        newsGrid.appendChild(newsCard);
+                    });
+                } else {
+                    // If no news in Firebase, load static content
+                    loadStaticNews();
+                }
+            });
+        }
+
+        // Load FAQs from Firebase
+        function loadFAQsFromFirebase(database, ref, onValue) {
+            const faqsRef = ref(database, 'faqs');
+            onValue(faqsRef, (snapshot) => {
+                const faqsContainer = document.querySelector('.faqs');
+                
+                // Keep the title, clear existing FAQ items
+                const existingItems = faqsContainer.querySelectorAll('.faq-item');
+                existingItems.forEach(item => item.remove());
+                
+                const faqs = snapshot.val();
+                if (faqs) {
+                    Object.keys(faqs).forEach((key, index) => {
+                        const faq = faqs[key];
+                        const faqItem = createFAQItem(faq, index);
+                        faqsContainer.appendChild(faqItem);
+                    });
+                }
+            });
+        }
+
+        // Create news card element
+        function createNewsCard(news, index) {
+            const div = document.createElement('div');
+            div.className = 'news-card';
+            div.style.animationDelay = `${index * 0.1}s`;
+            
+            div.innerHTML = `
+                <div class="news-content">
+                    <div class="news-date">${news.date}</div>
+                    <h3 class="news-title">${news.title}</h3>
+                    <p class="news-excerpt">${news.content}</p>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Create FAQ item element
+        function createFAQItem(faq, index) {
+            const div = document.createElement('div');
+            div.className = 'faq-item';
+            div.style.animationDelay = `${index * 0.1}s`;
+            
+            div.innerHTML = `
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>${faq.question}</span>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>${faq.answer}</p>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Static content fallbacks
+        function loadStaticNews() {
+            const newsGrid = document.getElementById('newsGrid');
+            const staticNews = [
+                {
+                    date: "January 15, 2025",
+                    title: "New State-of-the-Art Laboratory Inaugurated",
+                    content: "SMC proudly announces the opening of our advanced pathology laboratory, equipped with the latest diagnostic equipment and technology."
+                },
+                {
+                    date: "January 10, 2025",
+                    title: "International Medical Conference 2025",
+                    content: "SMC will host the International Medical Education Conference, bringing together experts from around the world to share knowledge and innovations."
+                },
+                {
+                    date: "January 5, 2025",
+                    title: "Scholarship Program Launch",
+                    content: "We are pleased to announce the launch of our new merit-based scholarship program for deserving students from underserved communities."
+                }
+            ];
+            
+            staticNews.forEach((news, index) => {
+                const newsCard = createNewsCard(news, index);
+                newsGrid.appendChild(newsCard);
+            });
+        }
+
+        function loadStaticFAQs() {
+            // Static FAQs are already in HTML, so we don't need to do anything
+            console.log('Using static FAQs');
+        }
+    </script>
 </body>
 </html>
+    
