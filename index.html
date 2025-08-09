@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Navigation - Fixed position always visible */
         .navbar {
             position: fixed;
             top: 0;
@@ -34,6 +34,7 @@
             z-index: 1000;
             padding: 1rem 2rem;
             transition: all 0.3s ease;
+            transform: translateY(0);
         }
 
         .navbar.scrolled {
@@ -120,7 +121,7 @@
             color: #9D4EDD;
         }
 
-        /* Hero Section */
+        /* Hero Section - Updated for new layout */
         .hero {
             height: 100vh;
             background: linear-gradient(135deg, rgba(125, 0, 182, 0.8), rgba(157, 78, 221, 0.6)), url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png');
@@ -133,17 +134,50 @@
             text-align: center;
             color: white;
             position: relative;
+            padding: 0 2rem;
         }
 
         .hero-content {
-            animation: fadeInUp 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .hero-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .hero.expanded .hero-content {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .hero.expanded .hero-main {
+            align-items: flex-start;
+            width: 40%;
+            padding-right: 2rem;
         }
 
         .college-logo {
-            width: 120px;
-            height: 120px;
+            width: 180px; /* Larger logo */
+            height: 180px; /* Larger logo */
             margin: 0 auto 2rem;
+            transition: all 0.5s ease;
             animation: zoomIn 1s ease-out 0.3s both;
+        }
+
+        .hero.expanded .college-logo {
+            margin: 0 0 1rem 0;
+            width: 150px; /* Slightly smaller when moved */
+            height: 150px; /* Slightly smaller when moved */
         }
 
         .hero h1 {
@@ -197,17 +231,22 @@
         .hero-description {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease;
-            margin-top: 2rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+            margin-top: 0;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 0 2rem;
+            padding: 0;
+            width: 0;
         }
 
-        .hero-description.expanded {
-            max-height: 200px;
+        .hero.expanded .hero-description {
+            max-height: 500px;
+            opacity: 1;
             padding: 2rem;
+            width: 55%;
+            margin-top: 0;
         }
 
         /* Domain Boxes */
@@ -470,6 +509,22 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
+            
+            .hero.expanded .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero.expanded .hero-main {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 2rem;
+                align-items: center;
+            }
+            
+            .hero.expanded .hero-description {
+                width: 100%;
+            }
 
             .domains-container {
                 gap: 1rem;
@@ -484,7 +539,7 @@
             }
         }
 
-        /* News Section */
+        /* News Section - Enhanced purple cards */
         .news {
             padding: 5rem 2rem;
             background: white;
@@ -500,28 +555,32 @@
         }
 
         .news-card { 
-            min-width: 300px;
             background: linear-gradient(135deg, #7D00B6, #9D4EDD);
             color: white;
-            padding: 2rem;
             border-radius: 15px;
-            scroll-snap-align: start;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(125, 0, 182, 0.2);
+            transition: all 0.4s ease;
             opacity: 0;
-            transform: translateX(50px);
-            font-color: 
-
+            transform: translateY(30px);
+            animation: cardAppear 0.6s ease forwards;
+            animation-delay: calc(var(--delay) * 0.1s);
         }
 
-        .news-card.animate {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .news-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(125, 0, 182, 0.2);
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(125, 0, 182, 0.3);
         }
 
         .news-content {
@@ -529,20 +588,20 @@
         }
 
         .news-date {
-            color: #FFFFFF;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
 
         .news-title {
             font-family: 'Barlow', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #FFFFFF;
+            color: white;
         }
 
         .news-excerpt {
-            color: #FFFFFF;
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.6;
         }
     </style>
@@ -570,15 +629,19 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Updated structure -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC Logo" class="college-logo">
-            <h1>Student Research Forum</h1>
-            <p></p>Description </p>
-            <button class="cta-button" onclick="toggleDescription()">View More</button>
+            <div class="hero-main">
+                <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC Logo" class="college-logo">
+                <h1>Student Research Forum</h1>
+                <p>Advancing Medical Research & Education</p>
+                <button class="cta-button" onclick="toggleDescription()">View More</button>
+            </div>
             <div class="hero-description" id="heroDescription">
-                <p>bari description</p>
+                <h2>About SMC SRC</h2>
+                <p>The Student Research Forum at Sargodha Medical College is dedicated to fostering a culture of scientific inquiry and innovation among medical students. We provide a platform for students to engage in cutting-edge research, collaborate with faculty mentors, and present their findings at national and international conferences.</p>
+                <p>Our mission is to empower the next generation of medical researchers and clinicians through hands-on research experience, specialized training workshops, and interdisciplinary collaboration. We believe that research is fundamental to advancing medical knowledge and improving patient care.</p>
             </div>
         </div>
     </section>
@@ -588,58 +651,44 @@
         <h2 class="section-title">Our Domains</h2>
         <div class="domains-container">
             <div class="domain-card">
-                <h3>DOMAIN1</h3>
-                <p>DOMAIN.</p>
+                <h3>Clinical Research</h3>
+                <p>Patient-centered studies in hospital settings.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
+                <h3>Basic Medical Sciences</h3>
+                <p>Laboratory-based research in anatomy, physiology, and biochemistry.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN.</p>
+                <h3>Public Health</h3>
+                <p>Community health initiatives and epidemiological studies.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN.</p>
+                <h3>Medical Education</h3>
+                <p>Innovative approaches to teaching and learning medicine.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
+                <h3>Biomedical Engineering</h3>
+                <p>Development of medical devices and diagnostic tools.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
+                <h3>Genetics & Genomics</h3>
+                <p>Research in hereditary diseases and personalized medicine.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
             <div class="domain-card">
-                <h3>CONTINUING EDUCATION</h3>
-                <p>DOMAIN</p>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
-                <button class="apply-btn">Apply Now</button>
-            </div>
-            <div class="domain-card">
-                <h3>DOMAIN</h3>
-                <p>DOMAIN</p>
+                <h3>Continuing Education</h3>
+                <p>Professional development programs for healthcare providers.</p>
                 <button class="apply-btn">Apply Now</button>
             </div>
         </div>
     </section>
-<!-- FAQs Section -->
+
+    <!-- FAQs Section -->
     <section class="faqs" id="faqs">
         <h2 class="section-title">Frequently Asked Questions</h2>
         <div class="faq-item">
@@ -680,11 +729,31 @@
         </div>
     </section>
 
-    <!-- News Section -->
+    <!-- News Section - Enhanced purple cards -->
     <section class="news" id="news">
         <h2 class="section-title">Latest News & Updates</h2>
         <div class="news-grid" id="newsGrid">
-            <!-- News items will be loaded dynamically from Firebase -->
+            <div class="news-card" style="--delay: 0">
+                <div class="news-content">
+                    <div class="news-date">August 8, 2025</div>
+                    <h3 class="news-title">Annual Research Symposium Announced</h3>
+                    <p class="news-excerpt">SMC SRC is proud to announce our 5th Annual Research Symposium to be held on October 15-16, 2025. Submit your abstracts by September 20th.</p>
+                </div>
+            </div>
+            <div class="news-card" style="--delay: 1">
+                <div class="news-content">
+                    <div class="news-date">August 2, 2025</div>
+                    <h3 class="news-title">New Research Grant Opportunities</h3>
+                    <p class="news-excerpt">The Ministry of Health has announced new grant opportunities for student-led research projects. Apply now for funding up to PKR 500,000.</p>
+                </div>
+            </div>
+            <div class="news-card" style="--delay: 2">
+                <div class="news-content">
+                    <div class="news-date">July 28, 2025</div>
+                    <h3 class="news-title">SRC Team Wins National Competition</h3>
+                    <p class="news-excerpt">Our student research team won first prize at the National Medical Innovation Challenge for their work on telemedicine solutions for rural areas.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -693,7 +762,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About SMC SRC</h3>
-                <p>Society ki description</p>
+                <p>The Student Research Council at Sargodha Medical College promotes research excellence and innovation among medical students through mentorship, resources, and collaborative opportunities.</p>
                 <div class="footer-social">
                     <a href="#"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -707,7 +776,7 @@
             </div>
             <div class="footer-section">
                 <h3>Contact Info</h3>
-                <p>University of Sargodha<br>Sargodha, Punjab, Pakistan<br>Phone: No.<br>Email: official.srcsmc@gmail.com</p>
+                <p>University of Sargodha<br>Sargodha, Punjab, Pakistan<br>Phone: (048) 9230765<br>Email: official.srcsmc@gmail.com</p>
             </div>
             <div class="footer-section">
                 <h3>Resources</h3>
@@ -725,7 +794,7 @@
     </button>
 
     <script>
-        // Navbar scroll effect
+        // Navbar scroll effect - Fixed position always visible
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             const scrollTop = document.getElementById('scrollTop');
@@ -775,10 +844,10 @@
             }
         }, { once: true });
 
-        // Toggle hero description
+        // Toggle hero description - Updated for new layout
         function toggleDescription() {
-            const description = document.getElementById('heroDescription');
-            description.classList.toggle('expanded');
+            const hero = document.querySelector('.hero');
+            hero.classList.toggle('expanded');
         }
 
         // FAQ toggle
@@ -818,11 +887,11 @@
                 document.querySelector('.section-title').classList.add('animate');
             }, 500);
             
-            // Initialize Firebase and load dynamic content
+            // Initialize Firebase for news
             initializeFirebase();
         });
 
-        // Firebase Configuration and Dynamic Content Loading
+        // Firebase Configuration for News Only
         function initializeFirebase() {
             // Firebase configuration
             const firebaseConfig = {
@@ -849,14 +918,10 @@
                     
                     // Load news from Firebase
                     loadNewsFromFirebase(database, ref, onValue);
-                    
-                    // Load FAQs from Firebase
-                    loadFAQsFromFirebase(database, ref, onValue);
                 })
                 .catch(error => {
-                    console.log('Firebase not available, using static content:', error);
+                    console.log('Firebase not available, using static news content:', error);
                     loadStaticNews();
-                    loadStaticFAQs();
                 });
         }
 
@@ -873,7 +938,7 @@
                     const sortedNews = Object.keys(news)
                         .map(key => ({id: key, ...news[key]}))
                         .sort((a, b) => b.timestamp - a.timestamp)
-                        .slice(0, 6); // Show only latest 6 news items
+                        .slice(0, 3); // Show only latest 3 news items
                     
                     sortedNews.forEach((item, index) => {
                         const newsCard = createNewsCard(item, index);
@@ -886,57 +951,17 @@
             });
         }
 
-        // Load FAQs from Firebase
-        function loadFAQsFromFirebase(database, ref, onValue) {
-            const faqsRef = ref(database, 'faqs');
-            onValue(faqsRef, (snapshot) => {
-                const faqsContainer = document.querySelector('.faqs');
-                
-                // Keep the title, clear existing FAQ items
-                const existingItems = faqsContainer.querySelectorAll('.faq-item');
-                existingItems.forEach(item => item.remove());
-                
-                const faqs = snapshot.val();
-                if (faqs) {
-                    Object.keys(faqs).forEach((key, index) => {
-                        const faq = faqs[key];
-                        const faqItem = createFAQItem(faq, index);
-                        faqsContainer.appendChild(faqItem);
-                    });
-                }
-            });
-        }
-
         // Create news card element
         function createNewsCard(news, index) {
             const div = document.createElement('div');
             div.className = 'news-card';
-            div.style.animationDelay = `${index * 0.1}s`;
+            div.style.setProperty('--delay', index);
             
             div.innerHTML = `
                 <div class="news-content">
-                    <div class="news-date">${news.date}</div>
-                    <h3 class="news-title">${news.title}</h3>
-                    <p class="news-excerpt">${news.content}</p>
-                </div>
-            `;
-            
-            return div;
-        }
-
-        // Create FAQ item element
-        function createFAQItem(faq, index) {
-            const div = document.createElement('div');
-            div.className = 'faq-item';
-            div.style.animationDelay = `${index * 0.1}s`;
-            
-            div.innerHTML = `
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>${faq.question}</span>
-                    <i class="fas fa-plus faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>${faq.answer}</p>
+                    <div class="news-date">${news.date || 'Date not available'}</div>
+                    <h3 class="news-title">${news.title || 'News Title'}</h3>
+                    <p class="news-excerpt">${news.content || 'News content goes here...'}</p>
                 </div>
             `;
             
@@ -945,26 +970,9 @@
 
         // Static content fallbacks
         function loadStaticNews() {
-            const newsGrid = document.getElementById('newsGrid');
-            const staticNews = [
-                {
-                    date: "January 15, 2025",
-                    title: "New State-of-the-Art Laboratory Inaugurated",
-                    content: "SMC proudly announces the opening of our advanced pathology laboratory, equipped with the latest diagnostic equipment and technology."
-                }
-            ];
-            
-            staticNews.forEach((news, index) => {
-                const newsCard = createNewsCard(news, index);
-                newsGrid.appendChild(newsCard);
-            });
-        }
-
-        function loadStaticFAQs() {
-            // Static FAQs are already in HTML, so we don't need to do anything
-            console.log('Using static FAQs');
+            // Static news already in HTML, no need to change
+            console.log('Using static news content');
         }
     </script>
 </body>
 </html>
-    
