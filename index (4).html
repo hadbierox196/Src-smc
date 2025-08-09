@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMC SRC - Sargodha Medical College</title>
+  <meta name="description" content="Student Research Forum at Sargodha Medical College — advancing medical research and education." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#7D00B6;
+      --secondary:#9D4EDD;
+      --tertiary:#C77DFF;
+
+      --bg:#FAFAFF;
+      --ink:#1F2937;
+      --ink-soft:#374151;
+      --muted:#6B7280;
+
+      --blur: 14px;
+
+      --radius-lg: 20px;
+      --radius-md: 14px;
+
+      --shadow-1: 0 6px 24px rgba(15,23,42,.08);
+      --shadow-2: 0 12px 40px rgba(15,23,42,.14);
+
+      --grad-1: linear-gradient(135deg, var(--primary), var(--secondary));
+      --grad-anim: linear-gradient(120deg, #7D00B6, #9D4EDD, #C77DFF, #9D4EDD, #7D00B6);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-weight:500;
+      color:var(--ink);
+      line-height:1.65;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      background: var(--bg);
+      position: relative;
+      min-height: 100vh;
+      isolation:isolate;
+    }
+
+    body::before{
+      content:""; position:fixed; inset:-10% -20% -20% -20%;
+      background:
+        radial-gradient(600px 400px at 10% 10%, rgba(125,0,182,.15), transparent 55%),
+        radial-gradient(700px 600px at 85% 15%, rgba(157,78,221,.12), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(199,125,255,.12), transparent 60%),
+        linear-gradient(120deg, #FFFFFF, #F6F4FF);
+      filter: blur(70px);
+      z-index:-2;
+      animation: wallpaperShift 30s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+    body::after{
+      content:""; position:fixed; inset:0;
+      background-image:
+        radial-gradient(rgba(17,17,17,.05) 1px, transparent 1px),
+        radial-gradient(rgba(17,17,17,.03) .5px, transparent .5px);
+      background-size: 28px 28px, 60px 60px;
+      mix-blend-mode: multiply;
+      opacity:.25;
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    :focus-visible{
+      outline: 2px solid var(--secondary);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .glass{
+      background: linear-gradient( to bottom right, rgba(255,255,255,.75), rgba(255,255,255,.55) );
+      border: 1px solid rgba(17,17,17,.06);
+      border-top-color: rgba(255,255,255,.9);
+      backdrop-filter: saturate(120%) blur(var(--blur));
+      -webkit-backdrop-filter: saturate(120%) blur(var(--blur));
+      box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .chip{
+      display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+      padding:.45rem .7rem; border-radius:999px;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) );
+      border: 1px solid rgba(17,17,17,.06);
+      border-top-color: rgba(255,255,255,.95);
+      color:var(--ink); font-weight:600; letter-spacing:.2px; font-size:.85rem;
+      backdrop-filter: saturate(120%) blur(calc(var(--blur) - 4px));
+      -webkit-backdrop-filter: saturate(120%) blur(calc(var(--blur) - 4px));
+      box-shadow: 0 6px 20px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.9);
+      text-decoration:none;
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-2px); filter:saturate(1.05); box-shadow: var(--shadow-2) }
+
+    .scroll-progress{
+      position:fixed; inset:0 auto auto 0; height:4px; width:0%;
+      z-index:1200; background: var(--grad-anim);
+      background-size:300% 300%;
+      animation: gradientShift 12s ease infinite;
+      box-shadow: 0 2px 6px rgba(125,0,182,.25);
+      border-radius:0 3px 3px 0;
+    }
+
+    .navbar{
+      position:fixed; top:0; left:0; right:0; z-index:1100;
+      padding: .8rem 1rem;
+      transition: transform .35s ease, background .35s ease, box-shadow .35s ease;
+      transform: translateY(0);
+      border-bottom: 1px solid rgba(17,17,17,.06);
+    }
+    .navbar.hidden{ transform: translateY(-100%) }
+    .navbar.scrolled{ box-shadow: var(--shadow-1) }
+    .nav-container{
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    }
+    .nav-email{
+      display:flex; align-items:center; gap:.5rem;
+      font-size:.95rem; color:var(--ink); font-weight:600;
+      letter-spacing:.1px;
+    }
+    .nav-email svg{ width:18px; height:18px; flex:none; color:var(--ink) }
+
+    .nav-links{ list-style:none; display:flex; gap:1.2rem; padding:0; margin:0 }
+    .nav-links a{
+      text-decoration:none; color:var(--ink); font-weight:700;
+      position:relative; display:inline-flex; align-items:center; padding:.25rem .1rem;
+      transition: color .25s ease, transform .2s ease, opacity .2s ease;
+      opacity:.92;
+      font-family: "Barlow Condensed", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      letter-spacing:.3px;
+    }
+    .nav-links a::after{
+      content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0%;
+      background: var(--grad-1); border-radius:2px; transition: width .25s ease;
+    }
+    .nav-links a:hover{ transform: translateY(-1.5px); opacity:1 }
+    .nav-links a:hover::after{ width:100% }
+
+    .social-icons{ display:flex; gap:.5rem; align-items:center }
+    .icon{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; color:var(--ink) }
+
+    .hero{
+      position:relative; min-height:100vh; color:#111;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      padding: 7rem 1.5rem 4rem;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.75), rgba(255,255,255,.55)),
+        url('https://i.postimg.cc/FKPLFJDk/20250808-220626-0000.png') center/cover fixed no-repeat;
+      overflow:hidden; isolation:isolate;
+    }
+    .hero::before{
+      content:""; position:absolute; inset:-20%;
+      background: var(--grad-anim); background-size: 300% 300%;
+      opacity:.15; filter: blur(60px); animation: gradientShift 18s ease infinite; z-index:-1;
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0;
+      background-image: radial-gradient(rgba(0,0,0,.06) 1px, transparent 1px);
+      background-size:22px 22px; mix-blend-mode: multiply; pointer-events:none; opacity:.25; z-index:-1;
+    }
+
+    .hero-content{ width:100%; max-width:1200px; display:flex; flex-direction:column; align-items:center; gap:1.25rem; transition: all .5s ease; }
+    .hero-main{ display:flex; flex-direction:column; align-items:center; transition: all .5s ease; }
+    .hero.expanded .hero-content{ flex-direction:row; align-items:center; justify-content:space-between; text-align:left; gap:2rem; }
+    .hero.expanded .hero-main{ align-items:flex-start; width:42%; padding-right:1rem }
+
+    .college-logo{
+      width:180px; height:180px; object-fit:contain; margin: 0 auto 1.1rem; border-radius:24px; padding:10px;
+      animation: zoomIn .9s ease-out .15s both;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.6) );
+      border: 1px solid rgba(17,17,17,.06);
+      border-top-color: rgba(255,255,255,.95);
+      backdrop-filter: blur(calc(var(--blur) - 4px)); -webkit-backdrop-filter: blur(calc(var(--blur) - 4px));
+      box-shadow: var(--shadow-2), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+
+    h1, h2, h3{ font-family: "Barlow Condensed", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; letter-spacing:.3px; }
+    .hero h1{
+      font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem); line-height:1.08; margin:.25rem 0 .35rem; font-weight:800; color:#111;
+      text-shadow: 0 1px 0 rgba(255,255,255,.7); animation: fadeInUp .9s ease-out .35s both;
+    }
+    .hero p{ font-size: clamp(1rem, 1.2vw + .6rem, 1.25rem); color: var(--ink-soft); margin: 0 0 1rem; max-width: 54ch; animation: fadeInUp 1s ease-out .55s both; }
+
+    .cta-button{
+      border:none; cursor:pointer; position:relative; overflow:hidden; animation: fadeInUp 1s ease-out .75s both;
+      border-radius: 999px; padding: 14px 36px; color:var(--ink); font-weight:700; letter-spacing:.2px;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.95), rgba(255,255,255,.7) );
+      border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      backdrop-filter: saturate(120%) blur(calc(var(--blur) - 6px)); -webkit-backdrop-filter: saturate(120%) blur(calc(var(--blur) - 6px));
+      box-shadow: var(--shadow-2), inset 0 1px 0 rgba(255,255,255,.9);
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .cta-button::before{ content:""; position:absolute; inset:0; left:-120%; background: linear-gradient(90deg, transparent, rgba(0,0,0,.08), transparent); transition:left .55s ease; }
+    .cta-button:hover::before{ left:120% } .cta-button:hover{ transform: translateY(-2px); filter: saturate(1.05) }
+
+    .hero-description{
+      max-height:0; opacity:0; width:0; margin:0; overflow:hidden; border-radius: var(--radius-lg); padding:0; transition: all .6s ease;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) );
+      border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      color: var(--ink); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow-2), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .hero.expanded .hero-description{ width:56%; max-height:600px; opacity:1; padding: 1.5rem 1.5rem 1.75rem; }
+    .hero-description h2{ margin:0 0 .5rem; font-size:1.5rem; font-weight:800; color:var(--ink) }
+    .hero-description p{ color: var(--ink-soft) }
+
+    .section{ padding: 5rem 1.5rem }
+    .section-title{
+      font-size: clamp(1.6rem, 2.2vw + .8rem, 2.4rem); text-align:center; margin: 0 auto 2.2rem;
+      color: var(--ink); font-weight:800; opacity:0; transform: translateY(22px); transition: all .6s ease; position:relative; display:inline-block;
+    }
+    .section-title::after{ content:""; display:block; height:4px; width:68%; margin:.6rem auto 0; background: var(--grad-1); border-radius:4px; box-shadow: 0 6px 18px rgba(157,78,221,.3); }
+    .section-title.animate{ opacity:1; transform: translateY(0) }
+
+    .domains-container{
+      max-width:1200px; margin:0 auto; display:flex; gap:1.2rem; overflow-x:auto; padding: .5rem .2rem 1.2rem;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    }
+    .domain-card{
+      min-width:300px; scroll-snap-align:start; cursor:pointer; border-radius: var(--radius-lg); padding: 1.5rem;
+      transition: transform .3s ease, box-shadow .3s ease, opacity .4s ease; opacity:0; transform: translateY(24px);
+      color: var(--ink); background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) );
+      border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .domain-card.animate{ opacity:1; transform: translateY(0) }
+    .domain-card:hover{ transform: translateY(-8px) rotate(.4deg); box-shadow: var(--shadow-2) }
+    .domain-card h3{ margin:0 0 .6rem; font-size:1.3rem; font-weight:800 }
+    .domain-card p{ margin:0 0 1rem; color: var(--ink-soft) }
+    .apply-btn{
+      appearance:none; border-radius:999px; padding:10px 18px; font-weight:700; cursor:pointer; transition: all .25s ease; color: var(--ink);
+      background: linear-gradient( to bottom right, rgba(255,255,255,.95), rgba(255,255,255,.7) ); border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      backdrop-filter: blur(calc(var(--blur) - 6px)); -webkit-backdrop-filter: blur(calc(var(--blur) - 6px));
+      box-shadow: 0 8px 24px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .apply-btn:hover{ transform: translateY(-1px); filter: saturate(1.04) }
+
+    .team-container{ max-width:1200px; margin:0 auto; display:flex; gap:1.2rem; overflow-x:auto; padding: .5rem .2rem 1.2rem; scroll-snap-type:x mandatory; }
+    .team-card{
+      min-width:300px; scroll-snap-align:start; cursor:pointer; border-radius: var(--radius-lg); overflow:hidden;
+      transition: transform .3s ease, box-shadow .3s ease, opacity .4s ease, background .3s ease; opacity:0; transform: translateY(24px);
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) );
+      border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .team-card.animate{ opacity:1; transform: translateY(0) }
+    .team-card:hover{ transform: translateY(-8px); box-shadow: var(--shadow-2) }
+    .team-img{ width:100%; height:240px; object-fit:cover; display:block }
+    .team-info{ padding:1.2rem; text-align:center; color:var(--ink) }
+    .team-name{ margin:.2rem 0 .25rem; font-size:1.25rem; color:var(--ink); font-weight:800 }
+    .team-role{ margin:0 0 .5rem; color:var(--secondary); font-weight:700 }
+    .team-desc{ margin:0; color:var(--muted); font-size:.98rem }
+
+    .faqs{ max-width: 900px; margin:0 auto; }
+    .faq-item{
+      border-radius: 14px; margin-bottom: 1rem; transition: transform .25s ease, box-shadow .25s ease, opacity .4s ease; opacity:0; transform: translateY(24px);
+      overflow:hidden; background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) ); border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      color:var(--ink); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .faq-item.animate{ opacity:1; transform: translateY(0) }
+    .faq-item:hover{ transform: translateY(-4px); box-shadow: var(--shadow-2) }
+    .faq-question{ padding:1.1rem 1.2rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:800; color:var(--ink); user-select:none; }
+    .faq-icon{ width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; background: rgba(17,17,17,.06); color: var(--ink); transition: transform .25s ease; font-weight:900; }
+    .faq-item.active .faq-icon{ transform: rotate(45deg) }
+    .faq-answer{ max-height:0; overflow:hidden; transition:max-height .3s ease, padding .3s ease; background: rgba(255,255,255,.65); }
+    .faq-answer.active{ max-height:220px; padding: .8rem 1.2rem 1.1rem } .faq-answer p{ margin:0; color:var(--ink-soft) }
+
+    .news-inner{ max-width:1200px; margin:0 auto; }
+    .news-container{ display:flex; gap:1.2rem; overflow-x:auto; padding: .5rem .2rem 1.2rem; scroll-snap-type:x mandatory; }
+    .news-card{
+      min-width:300px; scroll-snap-align:start; cursor:pointer; border-radius: var(--radius-lg); padding: 1.2rem;
+      transition: transform .3s ease, box-shadow .3s ease, opacity .4s ease; opacity:0; transform: translateY(24px); will-change: transform, opacity;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.65) ); border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      color:var(--ink); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .news-card.animate{ opacity:1; transform: translateY(0); animation: cardAppear .6s ease both; animation-delay: calc(var(--delay) * 120ms); }
+    .news-card:hover{ transform: translateY(-8px) rotate(.4deg); box-shadow: var(--shadow-2) }
+    .news-content{ padding: .6rem } .news-date{ color: var(--muted); font-size:.9rem; margin-bottom:.5rem }
+    .news-title{ margin:.15rem 0 .5rem; font-size:1.25rem; font-weight:800; color:var(--ink) }
+    .news-excerpt{ margin:0; color: var(--ink-soft) }
+
+    .footer-sep{ display:block; width:100%; height:70px; margin-top:2rem; }
+    .footer-wrap{ background: linear-gradient(180deg, #F7F5FF 0%, #FFFFFF 100%); border-top: 1px solid rgba(17,17,17,.06); }
+    .footer{ padding: 3.2rem 1.5rem 2.2rem; opacity:0; transform: translateY(22px); transition: all .6s ease; }
+    .footer.animate{ opacity:1; transform: translateY(0) }
+    .footer-content{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; }
+    .footer-section{
+      border-radius: var(--radius-lg); padding: 1.1rem 1rem;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.9), rgba(255,255,255,.7) ); border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      color:var(--ink); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .footer-section h3{ margin:0 0 .65rem; color:var(--ink); font-weight:800 }
+    .footer-section p{ margin:.25rem 0; color:var(--ink-soft) }
+    .footer-social{ display:flex; gap:.6rem; margin-top:1rem }
+    .copyright{ text-align:center; padding-top:1.2rem; border-top:1px solid rgba(17,17,17,.08); margin-top:1.2rem; color:var(--muted) }
+
+    .scroll-top{
+      position:fixed; right:1.4rem; bottom:1.4rem; width:54px; height:54px; border-radius:999px; border:none; cursor:pointer;
+      opacity:0; visibility:hidden; transform: translateY(8px); transition: all .25s ease; z-index:1050;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.95), rgba(255,255,255,.7) ); border: 1px solid rgba(17,17,17,.06); border-top-color: rgba(255,255,255,.95);
+      color:var(--ink); backdrop-filter: blur(calc(var(--blur) - 6px)); -webkit-backdrop-filter: blur(calc(var(--blur) - 6px)); box-shadow: var(--shadow-2), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .scroll-top.visible{ opacity:1; visibility:visible; transform: translateY(0) }
+    .scroll-top svg{ width:22px; height:22px }
+
+    .hamburger{ display:none; width:30px; height:20px; position:relative; cursor:pointer; z-index: 1150; }
+    .hamburger span{ position:absolute; left:0; width:100%; height:3px; background: var(--ink); border-radius:3px; transition: all .3s ease; }
+    .hamburger span:nth-child(1){ top:0 } .hamburger span:nth-child(2){ top:9px } .hamburger span:nth-child(3){ top:18px }
+    .hamburger.active span:nth-child(1){ top:9px; transform: rotate(135deg); } .hamburger.active span:nth-child(2){ opacity:0 }
+    .hamburger.active span:nth-child(3){ top:9px; transform: rotate(-135deg); }
+
+    .mobile-menu{
+      position:fixed; inset:0; z-index:1140; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      transform: translateY(-100%); opacity:0; transition: all .5s ease; padding:2rem;
+      background: linear-gradient( to bottom right, rgba(255,255,255,.95), rgba(255,255,255,.7) );
+      border-top: 1px solid rgba(17,17,17,.06); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+    }
+    .mobile-menu.active{ transform: translateY(0); opacity:1 }
+    .mobile-nav-links{ list-style:none; display:flex; flex-direction:column; align-items:center; gap:1.2rem; margin:0 0 2rem; padding:0 }
+    .mobile-nav-links a{
+      color:var(--ink); font-size:1.5rem; text-decoration:none; position:relative; font-weight:800;
+      font-family: "Barlow Condensed", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; letter-spacing:.3px;
+    }
+    .mobile-nav-links a::after{ content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:var(--ink); transition:width .25s ease; }
+    .mobile-nav-links a:hover::after{ width:100% }
+
+    @keyframes fadeInUp{ from{ opacity:0; transform: translateY(26px) } to{ opacity:1; transform: translateY(0) } }
+    @keyframes zoomIn{ from{ opacity:0; transform: scale(.7) } to{ opacity:1; transform: scale(1) } }
+    @keyframes cardAppear{ from{ opacity:0; transform: translateY(24px) } to{ opacity:1; transform: translateY(0) } }
+    @keyframes gradientShift{ 0%{ background-position: 0% 50% } 50%{ background-position: 100% 50% } 100%{ background-position: 0% 50% } }
+    @keyframes wallpaperShift{ 0%{ transform: translate3d(0,0,0) } 100%{ transform: translate3d(-2%, -2%, 0) } }
+
+    @media (prefers-reduced-motion: reduce){
+      .hero::before, .scroll-progress, body::before{ animation:none }
+      .cta-button::before{ transition:none }
+      .domain-card, .team-card, .news-card, .faq-item{ transition:none }
+    }
+    @media (max-width: 992px){
+      .hero.expanded .hero-main{ width:100%; padding-right:0 }
+      .hero.expanded .hero-description{ width:100%; margin-top:.4rem }
+    }
+    @media (max-width: 768px){
+      .navbar{ padding:.8rem .95rem } .nav-container{ gap:.7rem; }
+      .nav-links, .social-icons{ display:none } .hamburger{ display:block }
+      .domains-container, .team-container, .news-container{ gap:.9rem } .domain-card{ min-width:260px }
+    }
+    @media (max-width: 480px){
+      .mobile-nav-links a{ font-size:1.25rem }
+      .domain-card, .team-card, .news-card{ min-width:100% }
+      .cta-button{ padding: 12px 28px; font-size:1rem }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <nav class="navbar glass" id="navbar" aria-label="Primary navigation">
+    <div class="nav-container">
+      <div class="nav-email" aria-label="Contact email">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" />
+          <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>official.srcsmc@gmail.com</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home" aria-label="Go to Home">Home</a></li>
+        <li><a href="#about" aria-label="Go to About Us">About Us</a></li>
+        <li><a href="#team" aria-label="Go to Our Team">Our Team</a></li>
+        <li><a href="#contact" aria-label="Go to Contact Us">Contact Us</a></li>
+        <li><a href="#faqs" aria-label="Go to FAQs">FAQs</a></li>
+        <li><a href="#news" aria-label="Go to News">News</a></li>
+      </ul>
+
+      <div class="social-icons" aria-label="Social links">
+        <a class="chip" href="#" aria-label="Facebook">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22 12.07C22 6.49 17.52 2 11.93 2 6.35 2 1.86 6.49 1.86 12.07c0 4.99 3.64 9.14 8.4 9.97v-7.05H7.9v-2.92h2.35v-2.23c0-2.32 1.38-3.6 3.49-3.6.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.69-1.47 1.39v2.03h2.5l-.4 2.92h-2.1v7.05c4.76-.83 8.4-4.98 8.4-9.97Z"/>
+          </svg>
+        </a>
+        <a class="chip" href="#" aria-label="Instagram">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+          </svg>
+        </a>
+        <a class="chip" href="#" aria-label="X">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 3h4.6l4.2 5.8L16.8 3H21l-7.2 9.1L21.5 21h-4.6l-4.6-6.2L7.1 21H2l7.8-9.9L3 3Z"/>
+          </svg>
+        </a>
+        <a class="chip" href="#" aria-label="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5s-1.98-.9-1.98-2S1.9 1.5 3 1.5s1.98.9 1.98 2Zm.02 5H1V23h4V8.5Zm6.5 0h-3.98V23h4v-7.5c0-2 1.7-3.2 3.5-3.2 1.8 0 2.48 1.2 2.48 3.1V23H22v-8.7c0-4.2-2.24-6.1-5.24-6.1-2.4 0-3.46 1.3-4.26 2.3h-.02V8.5Z"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hamburger" aria-label="Open mobile menu" aria-controls="mobileMenu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-content">
+      <div class="hero-main">
+        <img src="https://i.postimg.cc/3RdDkJcS/1754671340110.png" alt="SMC logo" class="college-logo" />
+        <h1>Student Research Forum</h1>
+        <p>Advancing Medical Research & Education</p>
+        <button class="cta-button" onclick="toggleDescription()" aria-controls="heroDescription" aria-expanded="false">View More</button>
+      </div>
+
+      <div class="hero-description" id="heroDescription" aria-live="polite">
+        <h2>About SMC SRC</h2>
+        <p>The Student Research Forum at Sargodha Medical College is dedicated to fostering a culture of scientific inquiry and innovation among medical students. We provide a platform for students to engage in cutting-edge research, collaborate with faculty mentors, and present their findings at national and international conferences.</p>
+        <p>Our mission is to empower the next generation of medical researchers and clinicians through hands-on research experience, specialized training workshops, and interdisciplinary collaboration. We believe that research is fundamental to advancing medical knowledge and improving patient care.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about" aria-labelledby="domains-title">
+    <h2 class="section-title" id="domains-title">Our Domains</h2>
+    <div class="domains-container">
+      <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
+        <h3>Clinical Research</h3>
+        <p>Patient-centered studies in hospital settings.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Medical Sciences domain card">
+        <h3>Basic Medical Sciences</h3>
+        <p>Laboratory-based research in anatomy, physiology, and biochemistry.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Public Health domain card">
+        <h3>Public Health</h3>
+        <p>Community health initiatives and epidemiological studies.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Medical Education domain card">
+        <h3>Medical Education</h3>
+        <p>Innovative approaches to teaching and learning medicine.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Biomedical Engineering domain card">
+        <h3>Biomedical Engineering</h3>
+        <p>Development of medical devices and diagnostic tools.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Genetics and Genomics domain card">
+        <h3>Genetics & Genomics</h3>
+        <p>Research in hereditary diseases and personalized medicine.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Continuing Education domain card">
+        <h3>Continuing Education</h3>
+        <p>Professional development programs for healthcare providers.</p>
+        <button class="apply-btn">Apply Now</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="team" aria-labelledby="team-title">
+    <h2 class="section-title" id="team-title">Our Team</h2>
+    <div class="team-container">
+      <article class="team-card">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=60" alt="Dr. Sarah Johnson portrait" class="team-img" />
+        <div class="team-info">
+          <h3 class="team-name">Dr. Sarah Johnson</h3>
+          <p class="team-role">Director of Research</p>
+          <p class="team-desc">With 15+ years in medical research, Dr. Johnson leads our initiatives and mentors students in clinical studies.</p>
+        </div>
+      </article>
+      <article class="team-card">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=60" alt="Prof. Ahmed Khan portrait" class="team-img" />
+        <div class="team-info">
+          <h3 class="team-name">Prof. Ahmed Khan</h3>
+          <p class="team-role">Head of Basic Sciences</p>
+          <p class="team-desc">Specialist in biochemistry, supervising our laboratory-based research programs.</p>
+        </div>
+      </article>
+      <article class="team-card">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=1200&q=60" alt="Dr. Maria Garcia portrait" class="team-img" />
+        <div class="team-info">
+          <h3 class="team-name">Dr. Maria Garcia</h3>
+          <p class="team-role">Public Health Coordinator</p>
+          <p class="team-desc">Leads our community health initiatives and epidemiological research projects.</p>
+        </div>
+      </article>
+      <article class="team-card">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=60" alt="Dr. Robert Chen portrait" class="team-img" />
+        <div class="team-info">
+          <h3 class="team-name">Dr. Robert Chen</h3>
+          <p class="team-role">Medical Education Specialist</p>
+          <p class="team-desc">Develops innovative teaching methodologies and research in medical education.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="faqs section" id="faqs" aria-labelledby="faqs-title">
+    <h2 class="section-title" id="faqs-title">Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question" role="button" tabindex="0" onclick="toggleFAQ(this)" onkeypress="if(event.key==='Enter'){toggleFAQ(this)}" aria-expanded="false">
+        <span>What are the admission requirements for SMC?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </div>
+      <div class="faq-answer" aria-hidden="true">
+        <p>Admission to SMC requires completion of intermediate education with pre-medical subjects (Biology, Chemistry, Physics) with a minimum 60% marks. Candidates must also pass the entrance examination and interview.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" role="button" tabindex="0" onclick="toggleFAQ(this)" onkeypress="if(event.key==='Enter'){toggleFAQ(this)}" aria-expanded="false">
+        <span>What facilities are available for students?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </div>
+      <div class="faq-answer" aria-hidden="true">
+        <p>SMC offers state-of-the-art laboratories, modern classrooms, a comprehensive library, hostel accommodation, sports facilities, and 24/7 medical services for all students.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" role="button" tabindex="0" onclick="toggleFAQ(this)" onkeypress="if(event.key==='Enter'){toggleFAQ(this)}" aria-expanded="false">
+        <span>Are there scholarship opportunities available?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </div>
+      <div class="faq-answer" aria-hidden="true">
+        <p>Yes, SMC offers various scholarship programs based on academic merit, financial need, and special achievements. Details are available in our admissions office.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" role="button" tabindex="0" onclick="toggleFAQ(this)" onkeypress="if(event.key==='Enter'){toggleFAQ(this)}" aria-expanded="false">
+        <span>What is the duration of the medical program?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </div>
+      <div class="faq-answer" aria-hidden="true">
+        <p>The MBBS program at SMC is a 5-year degree program followed by a mandatory 1-year house job, making it a total of 6 years to complete medical education.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="news" aria-labelledby="news-title">
+    <div class="news-inner">
+      <h2 class="section-title" id="news-title">Latest News & Updates</h2>
+      <div class="news-container" id="newsContainer">
+        <article class="news-card" style="--delay: 0">
+          <div class="news-content">
+            <div class="news-date">August 8, 2025</div>
+            <h3 class="news-title">Annual Research Symposium Announced</h3>
+            <p class="news-excerpt">SMC SRC announces the 5th Annual Research Symposium on October 15–16, 2025. Submit abstracts by September 20th.</p>
+          </div>
+        </article>
+        <article class="news-card" style="--delay: 1">
+          <div class="news-content">
+            <div class="news-date">August 2, 2025</div>
+            <h3 class="news-title">New Research Grant Opportunities</h3>
+            <p class="news-excerpt">New grant opportunities for student-led research projects. Apply now for funding up to PKR 500,000.</p>
+          </div>
+        </article>
+        <article class="news-card" style="--delay: 2">
+          <div class="news-content">
+            <div class="news-date">July 28, 2025</div>
+            <h3 class="news-title">SRC Team Wins National Competition</h3>
+            <p class="news-excerpt">Our team won first prize at the National Medical Innovation Challenge for telemedicine solutions in rural areas.</p>
+          </div>
+        </article>
+        <article class="news-card" style="--delay: 3">
+          <div class="news-content">
+            <div class="news-date">July 15, 2025</div>
+            <h3 class="news-title">New Research Lab Inaugurated</h3>
+            <p class="news-excerpt">A state-of-the-art research laboratory has been inaugurated for advanced biomedical research.</p>
+          </div>
+        </article>
+        <article class="news-card" style="--delay: 4">
+          <div class="news-content">
+            <div class="news-date">July 5, 2025</div>
+            <h3 class="news-title">International Collaboration Announced</h3>
+            <p class="news-excerpt">SMC SRC partners with Johns Hopkins University for joint public health research initiatives.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <svg class="footer-sep" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,32 C240,64 480,0 720,16 C960,32 1200,80 1440,48 L1440,70 L0,70 Z" fill="#F7F5FF"></path>
+  </svg>
+  <div class="footer-wrap" id="contact">
+    <footer class="footer" aria-labelledby="footer-title">
+      <div class="footer-content">
+        <section class="footer-section">
+          <h3 id="footer-title">About SMC SRC</h3>
+          <p>The Student Research Council at Sargodha Medical College promotes research excellence and innovation among medical students through mentorship, resources, and collaborative opportunities.</p>
+          <div class="footer-social" aria-label="Footer social links">
+            <a class="chip" href="#" aria-label="Facebook">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.07C22 6.49 17.52 2 11.93 2 6.35 2 1.86 6.49 1.86 12.07c0 4.99 3.64 9.14 8.4 9.97v-7.05H7.9v-2.92h2.35v-2.23c0-2.32 1.38-3.6 3.49-3.6.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.69-1.47 1.39v2.03h2.5l-.4 2.92h-2.1v7.05c4.76-.83 8.4-4.98 8.4-9.97Z"/></svg>
+            </a>
+            <a class="chip" href="#" aria-label="Instagram">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="chip" href="#" aria-label="X">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h4.6l4.2 5.8L16.8 3H21l-7.2 9.1L21.5 21h-4.6l-4.6-6.2L7.1 21H2l7.8-9.9L3 3Z"/></svg>
+            </a>
+            <a class="chip" href="#" aria-label="LinkedIn">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5s-1.98-.9-1.98-2S1.9 1.5 3 1.5s1.98.9 1.98 2Zm.02 5H1V23h4V8.5Zm6.5 0h-3.98V23h4v-7.5c0-2 1.7-3.2 3.5-3.2 1.8 0 2.48 1.2 2.48 3.1V23H22v-8.7c0-4.2-2.24-6.1-5.24-6.1-2.4 0-3.46 1.3-4.26 2.3h-.02V8.5Z"/></svg>
+            </a>
+          </div>
+        </section>
+        <section class="footer-section" aria-labelledby="quick-links">
+          <h3 id="quick-links">Quick Links</h3>
+          <p>Academic Programs<br />Admissions<br />Faculty<br />Research<br />Campus Life</p>
+        </section>
+        <section class="footer-section" aria-labelledby="contact-info">
+          <h3 id="contact-info">Contact Info</h3>
+          <p>University of Sargodha<br />Sargodha, Punjab, Pakistan<br />Phone: (048) 9230765<br />Email: official.srcsmc@gmail.com</p>
+        </section>
+        <section class="footer-section" aria-labelledby="resources">
+          <h3 id="resources">Resources</h3>
+          <p>Student Portal<br />Faculty Portal<br />Library<br />Online Learning<br />Career Services</p>
+        </section>
+      </div>
+      <div class="copyright">
+        <p>© 2025 SMC SRC. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scrollTop" onclick="scrollToTop()" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true"></div>
+
+  <script>
+    let lastScroll = 0;
+    const navbar = document.getElementById('navbar');
+    const scrollTopBtn = document.getElementById('scrollTop');
+    const progress = document.getElementById('scrollProgress');
+
+    function updateProgress(){
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const pct = height ? (scrollTop / height) * 100 : 0;
+      progress.style.width = pct + '%';
+    }
+
+    window.addEventListener('scroll', function () {
+      const current = window.pageYOffset;
+
+      if (current <= 0) {
+        navbar.classList.remove('hidden', 'scrolled');
+        scrollTopBtn.classList.remove('visible');
+      } else {
+        if (current > lastScroll && !navbar.classList.contains('hidden')) {
+          navbar.classList.add('hidden');
+        } else if (current < lastScroll && navbar.classList.contains('hidden')) {
+          navbar.classList.remove('hidden');
+        }
+
+        if (current > 100) {
+          navbar.classList.add('scrolled');
+          scrollTopBtn.classList.add('visible');
+        } else {
+          navbar.classList.remove('scrolled');
+          scrollTopBtn.classList.remove('visible');
+        }
+      }
+
+      lastScroll = current;
+      updateProgress();
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('animate');
+          revealObserver.unobserve(entry.target);
+        }
+      })
+    }, { threshold:.12 });
+
+    document.querySelectorAll('.section-title, .domain-card, .faq-item, .news-card, .footer, .team-card')
+      .forEach(el => revealObserver.observe(el));
+
+    function staggerIn(selector, delayStep=120){
+      const items = Array.from(document.querySelectorAll(selector));
+      items.forEach((el, idx) => {
+        el.style.setProperty('--delay', idx);
+        setTimeout(()=> el.classList.add('animate'), idx * delayStep);
+      });
+    }
+
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const target = entry.target;
+          if(target.matches('#about')){ staggerIn('.domain-card', 100); }
+          if(target.matches('#team')){ staggerIn('.team-card', 140); }
+          staggerObserver.unobserve(target);
+        }
+      })
+    }, { threshold:.15 });
+
+    const domainsSection = document.querySelector('#about');
+    const teamSection = document.querySelector('#team');
+    if(domainsSection) staggerObserver.observe(domainsSection);
+    if(teamSection) staggerObserver.observe(teamSection);
+
+    function toggleDescription(){
+      const hero = document.querySelector('.hero');
+      const btn = document.querySelector('.cta-button');
+      const expanded = hero.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', String(expanded));
+    }
+
+    function toggleFAQ(element){
+      const item = element.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isActive = item.classList.toggle('active');
+      answer.classList.toggle('active', isActive);
+      element.setAttribute('aria-expanded', String(isActive));
+      answer.setAttribute('aria-hidden', String(!isActive));
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      });
+    });
+
+    function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
+    window.scrollToTop = scrollToTop;
+
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function buildMobileMenu(){
+      if(!hamburger || !mobileMenu) return;
+      const links = document.querySelector('.nav-links')?.cloneNode(true);
+      const socials = document.querySelector('.social-icons')?.cloneNode(true);
+
+      const ul = document.createElement('ul');
+      ul.className = 'mobile-nav-links';
+      if(links){
+        links.querySelectorAll('a').forEach(a => {
+          const li = document.createElement('li');
+          const clone = a.cloneNode(true);
+          clone.addEventListener('click', toggleMobileMenu);
+          li.appendChild(clone);
+          ul.appendChild(li);
+        });
+      }
+
+      mobileMenu.innerHTML = '';
+      mobileMenu.appendChild(ul);
+      if(socials) mobileMenu.appendChild(socials);
+      mobileMenu.setAttribute('aria-hidden', 'true');
+
+      hamburger.addEventListener('click', toggleMobileMenu);
+    }
+
+    function toggleMobileMenu(){
+      const active = !mobileMenu.classList.contains('active');
+      mobileMenu.classList.toggle('active', active);
+      hamburger.classList.toggle('active', active);
+      hamburger.setAttribute('aria-expanded', String(active));
+      mobileMenu.setAttribute('aria-hidden', String(!active));
+      document.body.style.overflow = active ? 'hidden' : '';
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => { document.querySelector('.section-title')?.classList.add('animate'); }, 450);
+      buildMobileMenu();
+      updateProgress();
+    });
+
+    // expose for FAQ toggles in markup
+    window.toggleFAQ = toggleFAQ;
+    window.toggleDescription = toggleDescription;
+  </script>
+
+   Firebase v12.1.0: App, Analytics, and Realtime Database for News 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDF2wmnHZWwLsJ3H20FMdnyNSVE7UNPGUE",
+      authDomain: "srcsms-fbe25.firebaseapp.com",
+      databaseURL: "https://srcsms-fbe25-default-rtdb.firebaseio.com",
+      projectId: "srcsms-fbe25",
+      storageBucket: "srcsms-fbe25.firebasestorage.app",
+      messagingSenderId: "1085257788571",
+      appId: "1:1085257788571:web:19f9d4f327868d1cdfaa3e",
+      measurementId: "G-HJD1DPLCXR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    // Analytics may be blocked by some environments; wrap in try/catch.
+    try {
+      getAnalytics(app);
+    } catch (err) {
+      console.info("Analytics initialization skipped:", err?.message || err);
+    }
+
+    // Realtime Database: load "news"
+    const db = getDatabase(app);
+    const newsRef = ref(db, "news");
+
+    onValue(newsRef, (snapshot) => {
+      const news = snapshot.val();
+      const container = document.getElementById("newsContainer");
+      if (!container) return;
+
+      if (news && Object.keys(news).length) {
+        container.innerHTML = "";
+
+        const sorted = Object.keys(news)
+          .map((key) => ({ id: key, ...news[key] }))
+          .sort((a, b) => (b.timestamp ?? 0) - (a.timestamp ?? 0))
+          .slice(0, 5);
+
+        sorted.forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "news-card";
+          card.style.setProperty("--delay", index);
+
+          let displayDate = item.date || "Date not available";
+          if (item.timestamp) {
+            const d = new Date(item.timestamp);
+            displayDate = d.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }
+
+          card.innerHTML = `
+            <div class="news-content">
+              <div class="news-date">${displayDate}</div>
+              <h3 class="news-title">${item.title ?? "News Title"}</h3>
+              <p class="news-excerpt">${item.content ?? ""}</p>
+            </div>
+          `;
+
+          container.appendChild(card);
+
+          // trigger reveal animation
+          requestAnimationFrame(() => card.classList.add("animate"));
+        });
+      } else {
+        console.info("No news found in Firebase. Keeping static cards.");
+      }
+    }, (error) => {
+      console.warn("Error loading news from Firebase:", error?.message || error);
+    });
+  </script>
+</body>
+</html>
