@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation - Fixed position always visible */
+        /* Navigation - Fixed position with hide/show on scroll */
         .navbar {
             position: fixed;
             top: 0;
@@ -35,6 +35,11 @@
             padding: 1rem 2rem;
             transition: all 0.3s ease;
             transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
         }
 
         .navbar.scrolled {
@@ -167,8 +172,8 @@
         }
 
         .college-logo {
-            width: 180px; /* Larger logo */
-            height: 180px; /* Larger logo */
+            width: 180px;
+            height: 180px;
             margin: 0 auto 2rem;
             transition: all 0.5s ease;
             animation: zoomIn 1s ease-out 0.3s both;
@@ -176,8 +181,8 @@
 
         .hero.expanded .college-logo {
             margin: 0 0 1rem 0;
-            width: 150px; /* Slightly smaller when moved */
-            height: 150px; /* Slightly smaller when moved */
+            width: 150px;
+            height: 150px;
         }
 
         .hero h1 {
@@ -327,6 +332,69 @@
             background: white;
             color: #7D00B6;
             transform: scale(1.05);
+        }
+
+        /* About Us Section - Team Members */
+        .about-team {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(125, 0, 182, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .team-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(125, 0, 182, 0.2);
+        }
+
+        .team-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .team-name {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.3rem;
+            color: #7D00B6;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: #9D4EDD;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-desc {
+            color: #666;
+            font-size: 0.95rem;
         }
 
         /* FAQs */
@@ -495,50 +563,6 @@
             }
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero.expanded .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero.expanded .hero-main {
-                width: 100%;
-                padding-right: 0;
-                margin-bottom: 2rem;
-                align-items: center;
-            }
-            
-            .hero.expanded .hero-description {
-                width: 100%;
-            }
-
-            .domains-container {
-                gap: 1rem;
-            }
-
-            .domain-card {
-                min-width: 250px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* News Section - Enhanced purple cards */
         .news {
             padding: 5rem 2rem;
@@ -604,6 +628,97 @@
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.6;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin-bottom: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero.expanded .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero.expanded .hero-main {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 2rem;
+                align-items: center;
+            }
+            
+            .hero.expanded .hero-description {
+                width: 100%;
+            }
+
+            .domains-container {
+                gap: 1rem;
+            }
+
+            .domain-card {
+                min-width: 250px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .team-container {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -616,6 +731,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
+                <li><a href="#team">Our Team</a></li>
                 <li><a href="#contact">Contact Us</a></li>
                 <li><a href="#faqs">FAQs</a></li>
                 <li><a href="#news">News</a></li>
@@ -688,6 +804,45 @@
         </div>
     </section>
 
+    <!-- About Us Team Section -->
+    <section class="about-team" id="team">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-container">
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Team Member" class="team-img">
+                <div class="team-info">
+                    <h3 class="team-name">Dr. Sarah Johnson</h3>
+                    <p class="team-role">Director of Research</p>
+                    <p class="team-desc">With over 15 years of experience in medical research, Dr. Johnson leads our research initiatives and mentors students in clinical studies.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Team Member" class="team-img">
+                <div class="team-info">
+                    <h3 class="team-name">Prof. Ahmed Khan</h3>
+                    <p class="team-role">Head of Basic Sciences</p>
+                    <p class="team-desc">Professor Khan specializes in biochemistry research and oversees our laboratory-based research programs.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Team Member" class="team-img">
+                <div class="team-info">
+                    <h3 class="team-name">Dr. Maria Garcia</h3>
+                    <p class="team-role">Public Health Coordinator</p>
+                    <p class="team-desc">Dr. Garcia leads our community health initiatives and epidemiological research projects.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Team Member" class="team-img">
+                <div class="team-info">
+                    <h3 class="team-name">Dr. Robert Chen</h3>
+                    <p class="team-role">Medical Education Specialist</p>
+                    <p class="team-desc">Dr. Chen develops innovative teaching methodologies and research in medical education.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQs Section -->
     <section class="faqs" id="faqs">
         <h2 class="section-title">Frequently Asked Questions</h2>
@@ -754,6 +909,20 @@
                     <p class="news-excerpt">Our student research team won first prize at the National Medical Innovation Challenge for their work on telemedicine solutions for rural areas.</p>
                 </div>
             </div>
+            <div class="news-card" style="--delay: 3">
+                <div class="news-content">
+                    <div class="news-date">July 15, 2025</div>
+                    <h3 class="news-title">New Research Lab Inaugurated</h3>
+                    <p class="news-excerpt">The college has inaugurated a new state-of-the-art research laboratory equipped with the latest technology for biomedical research.</p>
+                </div>
+            </div>
+            <div class="news-card" style="--delay: 4">
+                <div class="news-content">
+                    <div class="news-date">July 5, 2025</div>
+                    <h3 class="news-title">International Collaboration Announced</h3>
+                    <p class="news-excerpt">SMC SRC has established a research collaboration with Johns Hopkins University for joint studies in public health initiatives.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -792,25 +961,45 @@
     <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>
-
     <script>
-        // Navbar scroll effect - Fixed position always visible
+        // Navbar scroll effect - Hide/show on scroll
+        let lastScroll = 0;
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             const scrollTop = document.getElementById('scrollTop');
+            const currentScroll = window.pageYOffset;
             
-            if (window.scrollY > 100) {
+            // Show/hide navbar based on scroll direction
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                navbar.classList.remove('scrolled');
+                scrollTop.classList.remove('visible');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !navbar.classList.contains('hidden')) {
+                // Scroll down
+                navbar.classList.add('hidden');
+            } else if (currentScroll < lastScroll && navbar.classList.contains('hidden')) {
+                // Scroll up
+                navbar.classList.remove('hidden');
+            }
+            
+            // Change navbar color when scrolled
+            if (currentScroll > 100) {
                 navbar.classList.add('scrolled');
                 scrollTop.classList.add('visible');
             } else {
                 navbar.classList.remove('scrolled');
                 scrollTop.classList.remove('visible');
             }
+            
+            lastScroll = currentScroll;
         });
 
         // Scroll animations
         function animateOnScroll() {
-            const elements = document.querySelectorAll('.section-title, .domain-card, .faq-item, .news-card, .footer');
+            const elements = document.querySelectorAll('.section-title, .domain-card, .faq-item, .news-card, .footer, .team-card');
             
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
@@ -858,8 +1047,7 @@
             faqItem.classList.toggle('active');
             answer.classList.toggle('active');
         }
-
-        // Scroll to top
+                // Scroll to top
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
@@ -873,6 +1061,12 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
+                    // Close mobile menu if open
+                    const mobileMenu = document.querySelector('.mobile-menu');
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                    
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -880,6 +1074,20 @@
                 }
             });
         });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (mobileMenu && hamburger) {
+                mobileMenu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                
+                // Toggle body scroll
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+        }
 
         // Initialize animations on load
         window.addEventListener('load', function() {
@@ -889,7 +1097,47 @@
             
             // Initialize Firebase for news
             initializeFirebase();
+            
+            // Add hamburger menu for mobile
+            createMobileMenu();
         });
+
+        // Create mobile menu dynamically
+        function createMobileMenu() {
+            const navbar = document.querySelector('.navbar');
+            if (!navbar) return;
+            
+            // Clone nav links for mobile
+            const navLinks = document.querySelector('.nav-links');
+            if (!navLinks) return;
+            
+            const mobileMenu = document.createElement('div');
+            mobileMenu.className = 'mobile-menu';
+            
+            const clonedLinks = navLinks.cloneNode(true);
+            clonedLinks.classList.add('mobile-nav-links');
+            mobileMenu.appendChild(clonedLinks);
+            
+            // Add social icons
+            const socialIcons = document.querySelector('.social-icons');
+            if (socialIcons) {
+                const clonedSocial = socialIcons.cloneNode(true);
+                mobileMenu.appendChild(clonedSocial);
+            }
+            
+            document.body.appendChild(mobileMenu);
+            
+            // Create hamburger button
+            const hamburger = document.createElement('div');
+            hamburger.className = 'hamburger';
+            hamburger.innerHTML = '<span></span><span></span><span></span>';
+            hamburger.addEventListener('click', toggleMobileMenu);
+            
+            const navContainer = document.querySelector('.nav-container');
+            if (navContainer) {
+                navContainer.appendChild(hamburger);
+            }
+        }
 
         // Firebase Configuration for News Only
         function initializeFirebase() {
@@ -930,6 +1178,8 @@
             const newsRef = ref(database, 'news');
             onValue(newsRef, (snapshot) => {
                 const newsGrid = document.getElementById('newsGrid');
+                if (!newsGrid) return;
+                
                 newsGrid.innerHTML = '';
                 
                 const news = snapshot.val();
@@ -938,7 +1188,7 @@
                     const sortedNews = Object.keys(news)
                         .map(key => ({id: key, ...news[key]}))
                         .sort((a, b) => b.timestamp - a.timestamp)
-                        .slice(0, 3); // Show only latest 3 news items
+                        .slice(0, 5); // Show only latest 5 news items
                     
                     sortedNews.forEach((item, index) => {
                         const newsCard = createNewsCard(item, index);
@@ -957,9 +1207,20 @@
             div.className = 'news-card';
             div.style.setProperty('--delay', index);
             
+            // Format date if timestamp exists
+            let displayDate = news.date || 'Date not available';
+            if (news.timestamp) {
+                const date = new Date(news.timestamp);
+                displayDate = date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+            
             div.innerHTML = `
                 <div class="news-content">
-                    <div class="news-date">${news.date || 'Date not available'}</div>
+                    <div class="news-date">${displayDate}</div>
                     <h3 class="news-title">${news.title || 'News Title'}</h3>
                     <p class="news-excerpt">${news.content || 'News content goes here...'}</p>
                 </div>
@@ -973,6 +1234,189 @@
             // Static news already in HTML, no need to change
             console.log('Using static news content');
         }
+
+        // Team cards animation
+        function animateTeamCards() {
+            const cards = document.querySelectorAll('.team-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate');
+                }, index * 150);
+            });
+        }
+
+        // Animate team cards when in view
+        const teamObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateTeamCards();
+                    teamObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const teamSection = document.querySelector('.about-team');
+        if (teamSection) {
+            teamObserver.observe(teamSection);
+        }
     </script>
+
+    <style>
+        /* Mobile Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #7D00B6;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 10px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+            background: white;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+            background: white;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(125, 0, 182, 0.98);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mobile-nav-links a:hover {
+            color: #9D4EDD;
+        }
+
+        .mobile-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .mobile-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links, .social-icons {
+                display: none;
+            }
+
+            .navbar.scrolled .hamburger span {
+                background: white;
+            }
+        }
+
+        /* Additional Mobile Optimizations */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .domain-card, .team-card {
+                min-width: 100%;
+            }
+
+            .mobile-nav-links a {
+                font-size: 1.2rem;
+            }
+
+            .news-card {
+                min-width: 100%;
+            }
+        }
+    </style>
 </body>
 </html>
