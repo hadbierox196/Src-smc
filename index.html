@@ -1459,7 +1459,11 @@
   </nav>
 
     <!-- Hero Section -->
- 
+ <section class="hero" id="hero" aria-label="Hero">
+  <div class="carousel-slides" id="carousel-slides" aria-live="polite"></div>
+    <button class="carousel-nav prev" id="prevBtn" aria-label="Previous slide" onclick="previousSlide()">‹</button>
+    <button class="carousel-nav next" id="nextBtn" aria-label="Next slide" onclick="nextSlide()">›</button>
+   
     <div class="carousel-dots" id="carouselDots" aria-hidden="false">
       <div class="carousel-dot active" data-index="0" onclick="goToSlide(0)"></div>
       <div class="carousel-dot" data-index="1" onclick="goToSlide(1)"></div>
