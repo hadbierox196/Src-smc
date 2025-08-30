@@ -1385,6 +1385,30 @@
   }
   }
 
+  /* ===== Hero Section Default (Desktop) ===== */
+.hero {
+  background: linear-gradient(135deg, rgba(125,0,182,0.1), rgba(157,78,221,0.1));
+  min-height: 70vh;  /* current desktop style */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* ===== Mobile Optimization ===== */
+@media (max-width: 768px) {
+  .hero {
+    background: #fff !important;   /* white background on mobile */
+    min-height: auto !important;   /* shrink to fit content */
+    padding: 1rem;                 /* less padding for small screens */
+  }
+
+  .hero h1,
+  .hero p {
+    font-size: 1rem;               /* smaller text for mobile */
+    text-align: center;            /* center align for neat look */
+  }
+      }
 
   </style>
 </head>
@@ -1435,21 +1459,7 @@
   </nav>
 
     <!-- Hero Section -->
-   <section class="hero" id="hero" aria-label="Hero">
-  <div class="carousel-slides" id="carousel-slides" aria-live="polite"></div>
-    <button class="carousel-nav prev" id="prevBtn" aria-label="Previous slide" onclick="previousSlide()">‹</button>
-    <button class="carousel-nav next" id="nextBtn" aria-label="Next slide" onclick="nextSlide()">›</button>
-
-    <div class="carousel-dots" id="carouselDots" aria-hidden="false">
-      <div class="carousel-dot active" data-index="0" onclick="goToSlide(0)"></div>
-      <div class="carousel-dot" data-index="1" onclick="goToSlide(1)"></div>
-      <div class="carousel-dot" data-index="2" onclick="goToSlide(2)"></div>
-      <div class="carousel-dot" data-index="3" onclick="goToSlide(3)"></div>
-    </div>
-  </div>
-</section>
-
-  <section class="section" id="about" aria-labelledby="domains-title">
+   <section class="hero" id="hero" aria-label=  <section class="section" id="about" aria-labelledby="domains-title">
     <h2 class="section-title" id="domains-title">Our Domains</h2>
     <div class="domains-container">
       <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
@@ -1484,54 +1494,96 @@ Builds awareness of research ethics among members.</p>
         <p>Manages the student research journal’s publication process.
 Collaborates with editorial and graphics domains.
 Provides a platform for showcasing student research work</p>
-        
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>E-Magazine & Publications</h3>
-        <p>Publishes society updates, research highlights, and creative content.
-Engages members through regular magazine issues.
-Promotes scientific communication and outreach.</p>
-     
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>Graphics & Tech</h3>
-        <p>Designs visuals, infographics, and digital media for SRC.
-Supports research presentations with technical expertise.
-Ensures attractive and effective communication materials.</p>
-     
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>Data & Logistics</h3>
-        <p>
-Manages society records, databases, and data storage.
-Ensures smooth logistics for events and projects.
-Provides analytical support to research teams.</p>
-     
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>Outreach & Collaboration</h3>
-        <p>Builds partnerships with institutions and external societies.
-Promotes SRC activities through external engagement.
-Expands networking and collaborative research opportunities.</p>
-     
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>Human Resource Management</h3>
-        <p>Recruits, trains, and manages society members.
-Ensures active participation and skill development.
-Maintains harmony and productivity within the society.</p>
-        
-      </article>
-      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
-        <h3>Conference & Events</h3>
-        <p>organizes academic events, workshops, and conferences.
-Coordinates decor and event execution with volunteers.
-Showcases SRC’s work on broader academic platforms.
-</p>
-     
-        
-        </div>
+"Hero">
+  <div class="carousel-slides" id="carousel-slides" aria-live="polite"></div>
+
+    <div class="carousel-dots" id="carouselDots" aria-hidden="false">
+      <div class="carousel-dot active" data-index="0" onclick="goToSlide(0)"></div>
+      <div class="carousel-dot" data-index="1" onclick="goToSlide(1)"></div>
+      <div class="carousel-dot" data-index="2" onclick="goToSlide(2)"></div>
+      <div class="carousel-dot" data-index="3" onclick="goToSlide(3)"></div>
+    </div>
+  </div>
+</section>
+   </div>
         </div> <!-- end .domains-container -->
+            <section class="section" id="about" aria-labelledby="domains-title">
+    <h2 class="section-title" id="domains-title">Our Domains</h2>
+    <div class="domains-container">
+      <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
+        <h3>Research Director</h3>
+        <p>This domain will oversee all research related matters of SRC including mentorship of the students in their research projects, IRB facilitation, Editorial board, ethics and review board and a student research journal.</p>
+        
+         </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>IRB Facilitator</h3>
+        <p>Guides students in preparing ethical approval applications.
+Coordinates with institutional boards for review processes.
+Ensures compliance with ethical standards in research.</p>
+     
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Editorial Board</h3>
+        <p>Oversees manuscript quality, formatting, and review process.
+Provides students editorial training and critical evaluation skills.
+Ensures smooth functioning of the student research journal.</p>
+     
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Ethics & Review</h3>
+        <p>
+Promotes integrity and ethical conduct in research activities.
+Reviews proposals for adherence to ethical norms.
+Builds awareness of research ethics among members.</p>
+        
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Journal</h3>
+        <p>Manages the student research journal’s publication process.
+Collaborates with editorial and graphics domains.
+Provides a platform for showcasing student research work</p>
+
+    </div>
+              <div>
+
+                  <section class="section" id="about" aria-labelledby="domains-title">
+    <h2 class="section-title" id="domains-title">Our Domains</h2>
+    <div class="domains-container">
+      <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
+        <h3>Research Director</h3>
+        <p>This domain will oversee all research related matters of SRC including mentorship of the students in their research projects, IRB facilitation, Editorial board, ethics and review board and a student research journal.</p>
+        
+         </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>IRB Facilitator</h3>
+        <p>Guides students in preparing ethical approval applications.
+Coordinates with institutional boards for review processes.
+Ensures compliance with ethical standards in research.</p>
+     
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Editorial Board</h3>
+        <p>Oversees manuscript quality, formatting, and review process.
+Provides students editorial training and critical evaluation skills.
+Ensures smooth functioning of the student research journal.</p>
+     
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Ethics & Review</h3>
+        <p>
+Promotes integrity and ethical conduct in research activities.
+Reviews proposals for adherence to ethical norms.
+Builds awareness of research ethics among members.</p>
+        
+      </article>
+      <article class="domain-card" tabindex="0" aria-label="Basic Sciences domain card">
+        <h3>Journal</h3>
+        <p>Manages the student research journal’s publication process.
+Collaborates with editorial and graphics domains.
+Provides a platform for showcasing student research work</p>
+
+    </div>
+                    <div>
 
 <!-- centralized apply button -->
 <div class="centralized-apply-container" aria-hidden="false">
