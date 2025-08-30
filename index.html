@@ -1323,6 +1323,61 @@
     transform: translateY(0);
   }
 
+    /* ========== Mobile Optimizations (place at the end of your CSS) ========== */
+@media (max-width: 768px) {
+
+  /* --- Domains Section: make 2 per row, centered, and autosize --- */
+  .domains-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* center leftover 1 or 2 boxes */
+    gap: 0.8rem;
+  }
+  .domain-card {
+    flex: 1 1 calc(50% - 1rem); /* 2 per row on mobile */
+    max-width: calc(50% - 1rem);
+    height: auto;              /* let content decide height */
+    padding: 0.8rem;           /* smaller padding */
+    text-align: center;
+  }
+  .domain-card h3 {
+    font-size: 1rem;           /* smaller heading */
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .domain-card p {
+    font-size: 0.85rem;        /* smaller paragraph */
+    margin-bottom: 0.6rem;
+  }
+
+  /* --- Mission & Goals Section: 2 per row, smaller text --- */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 boxes per row */
+    gap: 0.8rem;
+  }
+  .stat-box {
+    padding: 1rem;             /* reduce padding */
+  }
+  .stat-number {
+    font-size: 1.5rem;         /* smaller number */
+  }
+  .stat-label {
+    font-size: 0.85rem;        /* smaller label */
+  }
+
+  /* Optional: reduce large hero/carousel height on small screens */
+  .carousel-container,
+  .hero {
+    aspect-ratio: 16 / 7; /* less tall on phones */
+    max-height: 44vh;
+  }
+  .carousel-slide img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
   </style>
 </head>
 <body>
