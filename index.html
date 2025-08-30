@@ -198,20 +198,22 @@
     }
     .apply-btn:hover{ transform: translateY(-1px); filter: saturate(1.04) }
 
-    /* Mobile responsive grid - 3 columns on mobile */
-    @media (max-width: 768px){
-      .domains-container{
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-      }
-      .domain-card{
-        height: auto;
-        padding: 1rem;
-      }
-      .domain-card h3{
-        font-size: 1.1rem;
-      }
-    }
+    @media (max-width: 768px) {
+  .domains-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 boxes per row */
+    gap: 0.8rem;
+  }
+  .domain-card {
+    height: auto;              /* let content decide height */
+    padding: 0.8rem;           /* smaller padding */
+  }
+  .domain-card h3 {
+    font-size: 1rem;           /* smaller heading */
+  }
+  .domain-card p {
+    font-size: 0.85rem;        /* smaller paragraph */
+  }
+}
 
     /* New Mission & Goals section styles */
     .mission-section{
@@ -272,21 +274,21 @@
     }
     
     /* Mobile responsive stats - keep 4 in a row */
-    @media (max-width: 768px){
-      .stats-container{
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.8rem;
-      }
-      .stat-box{
-        padding: 1.5rem 0.5rem;
-      }
-      .stat-number{
-        font-size: 2rem;
-      }
-      .stat-label{
-        font-size: 0.9rem;
-      }
-    }
+    @media (max-width: 768px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 boxes per row instead of 4 */
+    gap: 0.8rem;
+  }
+  .stat-box {
+    padding: 1rem;             /* reduce padding */
+  }
+  .stat-number {
+    font-size: 1.5rem;         /* smaller number */
+  }
+  .stat-label {
+    font-size: 0.85rem;        /* smaller label */
+  }
+}
 
     .team-container{ max-width:1200px; margin:0 auto; display:flex; gap:1.2rem; overflow-x:auto; padding: .5rem .2rem 1.2rem; scroll-snap-type:x mandatory; }
     .team-card{
