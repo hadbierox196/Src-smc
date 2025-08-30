@@ -1407,6 +1407,41 @@
     display: none;
   }
 }  
+  /* ===== Strong mobile horizontal-scroll override ===== */
+@media (max-width: 768px) {
+  .domains-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.5rem !important;
+    padding: 0 !important;        /* remove container padding */
+    margin: 0 !important;         /* remove container margin */
+    width: 100% !important;
+    box-sizing: border-box !important;
+    scroll-snap-type: x mandatory !important;
+  }
+
+  /* Each card: predictable width, not too big, snaps into view */
+  .domains-container > .domain-card {
+    flex: 0 0 80% !important;     /* each card takes ~80% of viewport width */
+    min-width: 220px !important;  /* prevents too-small cards */
+    max-width: 320px !important;  /* prevents huge cards on large phones */
+    margin: 0.15rem !important;   /* small spacing between cards */
+    scroll-snap-align: start !important; /* align to left edge when snapping */
+    box-sizing: border-box !important;
+  }
+
+  /* Make sure images / inner elements don't force overflow */
+  .domain-card img, .domain-card * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* optional: small visible scrollbar (remove if you want hidden) */
+  .domains-container::-webkit-scrollbar { height: 8px; }
+  .domains-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 8px; }
+}
   </style>
 </head>
 <body>
@@ -2139,5 +2174,22 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
   if(typeof goToSlide === 'function'){ goToSlide(0); }
 })();
   </script>
+          <script>
+/* ensure the domains scroll starts at the first card on load/resize */
+(function(){
+  function ensureDomainsStart() {
+    const c = document.querySelector('.domains-container');
+    if(!c) return;
+    // reset any accidental offsets
+    c.scrollLeft = 0;
+    // also call scrollIntoView on first card to be safe
+    const first = c.querySelector('.domain-card');
+    if(first) first.scrollIntoView({behavior: 'auto', inline: 'start', block: 'nearest'});
+  }
+  window.addEventListener('load', ensureDomainsStart);
+  window.addEventListener('orientationchange', ensureDomainsStart);
+  window.addEventListener('resize', function(){ setTimeout(ensureDomainsStart, 120); });
+})();
+          </script>
 </body>
 </html>
