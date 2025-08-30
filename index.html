@@ -1385,62 +1385,28 @@
   }
   }
   
-/* Tablet view (≤768px): 2 per row */
 @media (max-width: 768px) {
   .domains-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    justify-items: center;
-  }
-  .domain-card {
-    width: 100%;
-    max-width: 250px; /* keeps them nice size */
-  }
-
-  .stats-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-}
-
-/* Mobile view (≤480px): 1 per row */
-@media (max-width: 480px) {
-  .domains-container {
-    grid-template-columns: 1fr;  /* full width */
-  }
-  .domain-card {
-    max-width: 90%;              /* not edge-to-edge, leaves margin */
-    margin: 0 auto;
-  }
-
-  .stats-container {
-    grid-template-columns: 1fr;  /* 1 box per row */
-  }
-}
-  @media (max-width: 768px) {
-  .domains-container {
     display: flex;
-    flex-wrap: nowrap;         /* keep in one row */
-    overflow-x: auto;          /* enable horizontal scroll */
-    scroll-snap-type: x mandatory; /* smooth snap scrolling */
-    -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-    gap: 1rem;
-    padding: 0.5rem;
+    flex-wrap: nowrap;         
+    overflow-x: auto;          /* horizontal scroll */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.5rem;               /* small gap only */
+    padding: 0;                /* remove excess padding */
   }
 
   .domain-card {
-    flex: 0 0 80%;             /* each card ~80% of screen width */
-    max-width: 300px;          /* avoid giant cards */
-    scroll-snap-align: center; /* snap cards nicely in center */
+    flex: 0 0 70%;             /* ~70% of screen width */
+    max-width: 250px;          /* stop them from being too huge */
+    scroll-snap-align: center; /* snap each card to center */
   }
 
-  /* hide scrollbar for neat look */
+  /* hide scrollbar */
   .domains-container::-webkit-scrollbar {
     display: none;
   }
-  }
-  
+}  
   </style>
 </head>
 <body>
