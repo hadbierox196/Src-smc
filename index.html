@@ -1418,6 +1418,28 @@
     grid-template-columns: 1fr;  /* 1 box per row */
   }
 }
+  @media (max-width: 768px) {
+  .domains-container {
+    display: flex;
+    flex-wrap: nowrap;         /* keep in one row */
+    overflow-x: auto;          /* enable horizontal scroll */
+    scroll-snap-type: x mandatory; /* smooth snap scrolling */
+    -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .domain-card {
+    flex: 0 0 80%;             /* each card ~80% of screen width */
+    max-width: 300px;          /* avoid giant cards */
+    scroll-snap-align: center; /* snap cards nicely in center */
+  }
+
+  /* hide scrollbar for neat look */
+  .domains-container::-webkit-scrollbar {
+    display: none;
+  }
+  }
   
   </style>
 </head>
