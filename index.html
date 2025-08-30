@@ -1481,6 +1481,47 @@
   /* If you have a fixed navbar, make sure anchor scrolls don't hide the top of the section */
   html { scroll-padding-top: 72px; } /* adjust to your navbar height */
 }
+
+  /* === DOMAINS: MOBILE H-SCROLL, GRID VARIANT === */
+@media (max-width: 768px) {
+  .domains-container {
+    /* neutralize common blockers from earlier CSS */
+    all: unset;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;         /* one card per screen with a peek */
+    gap: 12px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    padding-inline: 8px;            /* keep first card visible */
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+    scroll-snap-type: x proximity;  /* gentler than 'mandatory' */
+    touch-action: pan-x;            /* allow horizontal gestures */
+    scrollbar-width: none;          /* Firefox hide bar (visual only) */
+  }
+  .domains-container::-webkit-scrollbar { display: none; }
+
+  .domains-container > .domain-card {
+    scroll-snap-align: start;
+    min-width: 220px;
+    height: auto;
+    margin: 0;                      /* margins break snap */
+    box-sizing: border-box;
+  }
+
+  /* kill any fixed heights that cause jank */
+  .domain-card { height: auto !important; }
+
+  /* Safety: nothing above should steal the pointer */
+  .domains-container * { pointer-events: auto; }
+}
   
   </style>
 </head>
