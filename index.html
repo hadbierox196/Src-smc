@@ -1385,7 +1385,40 @@
   }
   }
   
+/* Tablet view (≤768px): 2 per row */
+@media (max-width: 768px) {
+  .domains-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    justify-items: center;
+  }
+  .domain-card {
+    width: 100%;
+    max-width: 250px; /* keeps them nice size */
+  }
 
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Mobile view (≤480px): 1 per row */
+@media (max-width: 480px) {
+  .domains-container {
+    grid-template-columns: 1fr;  /* full width */
+  }
+  .domain-card {
+    max-width: 90%;              /* not edge-to-edge, leaves margin */
+    margin: 0 auto;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;  /* 1 box per row */
+  }
+}
+  
   </style>
 </head>
 <body>
