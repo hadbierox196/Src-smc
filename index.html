@@ -1365,18 +1365,26 @@
   .stat-label {
     font-size: 0.65rem;        /* smaller label */
   }
-
   @media (max-width: 768px) {
-  /* Make carousel less tall on phones */
   .carousel-container {
-    max-height: auto;   /* shrink height */
-    aspect-ratio: 16 / 9;
+    height: auto !important;     /* override any fixed height */
+    min-height: unset !important;
+    max-height: unset !important;
+  }
+  .carousel-slides {
+    height: auto !important;
+  }
+  .carousel-slide {
+    height: auto !important;
   }
   .carousel-slide img {
-    height: 100%;
-    object-fit: cover;  /* crop nicely instead of squishing */
+    width: 100%;
+    height: auto !important;     /* natural image scaling */
+    object-fit: contain !important;
+    display: block;
   }
   }
+
 
   </style>
 </head>
