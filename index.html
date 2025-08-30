@@ -1442,6 +1442,46 @@
   .domains-container::-webkit-scrollbar { height: 8px; }
   .domains-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 8px; }
 }
+
+  /* >>> Put near the end of your CSS so it overrides other mobile rules <<< */
+@media (max-width: 768px) {
+  /* Make sure domains are horizontal swipeable but never cause vertical scrolling */
+  .domains-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;            /* STOP vertical scroll */
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.5rem !important;
+    padding: 0 0.5rem !important;             /* small horizontal padding only */
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-left: 8px;                 /* ensure leftmost card isn't hidden under padding */
+  }
+
+  /* predictable card width and snap alignment */
+  .domains-container > .domain-card {
+    flex: 0 0 84% !important;                /* ~1 card per view with a peek of next */
+    min-width: 220px !important;
+    max-width: 320px !important;
+    height: auto !important;                 /* do not force fixed heights on mobile */
+    margin: 0 !important;                    /* remove margins that can push content */
+    scroll-snap-align: start !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Prevent inner elements from forcing container taller */
+  .domain-card, .domain-card * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* If you have a fixed navbar, make sure anchor scrolls don't hide the top of the section */
+  html { scroll-padding-top: 72px; } /* adjust to your navbar height */
+}
+  
   </style>
 </head>
 <body>
@@ -1545,7 +1585,7 @@ Provides a platform for showcasing student research work</p>
               <div>
             </section>
 
-                  <section class="section" id="about" aria-labelledby="domains-title">
+                  <section class="section"  aria-labelledby="domains-title">
     <h2 class="section-title" id="domains-title">Our Domains</h2>
     <div class="domains-container">
       <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
@@ -1585,8 +1625,8 @@ Provides a platform for showcasing student research work</p>
                     <div>
                   </section>
 
-                        <section class="section" id="about" aria-labelledby="domains-title">
-    <h2 class="section-title" id="domains-title">Our Domains</h2>
+                        <section class="section"  aria-labelledby="domains-title">
+    <h2 class="section-title" >Our Domains</h2>
     <div class="domains-container">
       <article class="domain-card" tabindex="0" aria-label="Clinical Research domain card">
         <h3>Research Director</h3>
