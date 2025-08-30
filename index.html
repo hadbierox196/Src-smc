@@ -1365,7 +1365,18 @@
   .stat-label {
     font-size: 0.65rem;        /* smaller label */
   }
- 
+
+  @media (max-width: 768px) {
+  /* Make carousel less tall on phones */
+  .carousel-container {
+    max-height: 40vh;   /* shrink height */
+    aspect-ratio: 16 / 9;
+  }
+  .carousel-slide img {
+    height: 100%;
+    object-fit: cover;  /* crop nicely instead of squishing */
+  }
+  }
 
   </style>
 </head>
