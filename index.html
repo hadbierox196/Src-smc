@@ -1346,7 +1346,7 @@
     margin-bottom: 0.4rem;
   }
   .domain-card p {
-    font-size: 0.45rem;        /* smaller paragraph */
+    font-size: 0.60rem;        /* smaller paragraph */
     margin-bottom: 0.6rem;
   }
 
@@ -1365,7 +1365,12 @@
   .stat-label {
     font-size: 0.65rem;        /* smaller label */
   }
-
+  /* Optional: reduce large hero/carousel height on small screens */
+  .carousel-container,
+  .hero {
+    aspect-ratio: 16 / 7; /* less tall on phones */
+    max-height: 44vh;
+  }
  
 
   </style>
