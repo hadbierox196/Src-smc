@@ -2335,6 +2335,7 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
           </script>
 <script>
 const mobileMenu = document.getElementById('mobileMenu');
+
 function openMenu() {
   mobileMenu.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2343,26 +2344,40 @@ function closeMenu() {
   mobileMenu.classList.remove('open');
   document.body.style.overflow = '';
 }
-document.querySelectorAll('.hamburger').forEach(btn => {
-  btn.addEventListener('click', e => {
+
+// Find any possible hamburger button
+const hamburgerBtn = document.querySelector('.hamburger, #hamburger, [data-menu]');
+if (hamburgerBtn) {
+  hamburgerBtn.addEventListener('click', e => {
     e.preventDefault();
     mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
-});
+} else {
+  console.warn("⚠️ No hamburger button found. Add <div class='hamburger'></div> or <button id='hamburger'>");
+}
+
+// Close button
 const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
 if (closeBtn) {
   closeBtn.addEventListener('click', closeMenu);
 }
+
+// Backdrop click
 mobileMenu.addEventListener('click', e => {
   if (e.target.classList.contains('mobile-menu-backdrop')) {
     closeMenu();
   }
 });
+
+// Close when clicking any menu link
 mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
+
+// Escape key closes menu
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMenu();
 });
+</script>
 </script></body>
 </html>
