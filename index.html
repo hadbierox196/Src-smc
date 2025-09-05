@@ -2418,73 +2418,47 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
   window.addEventListener('orientationchange', ensureDomainsStart);
   window.addEventListener('resize', function(){ setTimeout(ensureDomainsStart, 120); });
 })();
-            // Ensure mobile menu exists and append to body if not
-let mobileMenu = document.getElementById('mobileMenu');
-if (!mobileMenu) {
-  mobileMenu = document.createElement('div');
-  mobileMenu.id = 'mobileMenu';
-  mobileMenu.className = 'mobile-menu';
-  mobileMenu.setAttribute('aria-hidden', 'true');
-  // add minimal structure (backdrop + panel)
-  mobileMenu.innerHTML = `
-    <div class="mobile-menu-backdrop" data-close></div>
-    <nav class="mobile-menu-panel" role="menu" aria-label="Mobile menu">
-      <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
-      <ul class="mobile-menu-list"></ul>
-    </nav>
-  `;
-  document.body.appendChild(mobileMenu);
+            const mobileMenu = document.getElementById('mobileMenu');
+
+// Open/close helpers
+function openMenu() {
+  mobileMenu.classList.add('open');
+  document.body.style.overflow = 'hidden'; // prevent background scroll
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = ''; 
 }
 
-// If you already have a desktop nav, clone its links into mobile menu for convenience
-(function cloneNavLinks() {
-  const sourceNav = document.querySelector('.navbar nav, .main-nav, .site-nav'); // common selectors
-  const targetList = mobileMenu.querySelector('.mobile-menu-list');
-  if (sourceNav && targetList && targetList.children.length === 0) {
-    // Find anchor links inside sourceNav
-    sourceNav.querySelectorAll('a').forEach(a => {
-      const li = document.createElement('li');
-      const anchor = a.cloneNode(true);
-      anchor.removeAttribute('id'); // avoid duplicate ids
-      li.appendChild(anchor);
-      targetList.appendChild(li);
-    });
-  }
-})();
-
-const openMenu = () => {
-  mobileMenu.classList.add('open');
-  mobileMenu.setAttribute('aria-hidden', 'false');
-  // prevent page scroll
-  document.documentElement.style.overflow = 'hidden';
-  document.body.style.overflow = 'hidden';
-};
-const closeMenu = () => {
-  mobileMenu.classList.remove('open');
-  mobileMenu.setAttribute('aria-hidden', 'true');
-  document.documentElement.style.overflow = '';
-  document.body.style.overflow = '';
-};
-
-// hook hamburger button(s)
-document.querySelectorAll('.hamburger, .mobile-toggle').forEach(btn => {
+// Hamburger button opens/closes
+document.querySelectorAll('.hamburger').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
-    if (mobileMenu.classList.contains('open')) closeMenu();
-    else openMenu();
+    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
 });
 
-// close buttons and backdrop
-mobileMenu.addEventListener('click', (e) => {
-  if (e.target.matches('[data-close]') || e.target.closest('.mobile-menu-close')) {
+// Close button
+const closeBtn = mobileMenu.querySelector('.mobile-menu-close');
+if (closeBtn) {
+  closeBtn.addEventListener('click', closeMenu);
+}
+
+// Backdrop click
+mobileMenu.addEventListener('click', e => {
+  if (e.target.classList.contains('mobile-menu-backdrop')) {
     closeMenu();
   }
 });
 
-// close on ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+// Links close menu after navigating
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
+// Escape key closes too
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMenu();
 });
           </script>
 </body>
