@@ -1592,6 +1592,81 @@
   /* keep hamburger visible and tappable */
   .hamburger { display: block !important; z-index: 1300 !important; }
 }
+
+  /* Fullscreen mobile menu overlay */
+.mobile-menu {
+  position: fixed;
+  inset: 0;                 /* top:0; right:0; bottom:0; left:0 */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end; /* slide from right; change to center/left as needed */
+  align-items: stretch;
+  pointer-events: none;
+  z-index: 2000;            /* must be higher than navbar z-index */
+  transition: opacity 220ms linear;
+  opacity: 0;
+}
+
+/* Backdrop (click to close) */
+.mobile-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  pointer-events: auto;
+}
+
+/* Panel that slides in */
+.mobile-menu-panel {
+  pointer-events: auto;
+  width: 84vw;
+  max-width: 420px;
+  height: 100vh;
+  background: #fff;
+  transform: translateX(100%);     /* hidden to the right */
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1);
+  box-shadow: -18px 0 50px rgba(0,0,0,0.35);
+  padding: 1.25rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Open state */
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-menu.open .mobile-menu-panel {
+  transform: translateX(0);
+}
+
+/* Close button */
+.mobile-menu-close {
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+}
+
+/* hamburger visibility / tappable area */
+.hamburger {
+  z-index: 2100; /* higher than overlay's default backdrop so it's clickable before open */
+  position: relative;
+}
+
+/* menu list style (adjust to match your theme) */
+.mobile-menu-list { list-style: none; padding: 3rem 0 1rem; margin: 0; }
+.mobile-menu-list li { margin-bottom: 1rem; }
+.mobile-menu-list a { text-decoration: none; font-weight: 600; display: block; padding: .5rem 0; }
+
+/* small-screen only convenience */
+@media (min-width: 769px) {
+  .mobile-menu { display: none; }
+}
   
   </style>
 </head>
@@ -2343,6 +2418,74 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
   window.addEventListener('orientationchange', ensureDomainsStart);
   window.addEventListener('resize', function(){ setTimeout(ensureDomainsStart, 120); });
 })();
+            // Ensure mobile menu exists and append to body if not
+let mobileMenu = document.getElementById('mobileMenu');
+if (!mobileMenu) {
+  mobileMenu = document.createElement('div');
+  mobileMenu.id = 'mobileMenu';
+  mobileMenu.className = 'mobile-menu';
+  mobileMenu.setAttribute('aria-hidden', 'true');
+  // add minimal structure (backdrop + panel)
+  mobileMenu.innerHTML = `
+    <div class="mobile-menu-backdrop" data-close></div>
+    <nav class="mobile-menu-panel" role="menu" aria-label="Mobile menu">
+      <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
+      <ul class="mobile-menu-list"></ul>
+    </nav>
+  `;
+  document.body.appendChild(mobileMenu);
+}
+
+// If you already have a desktop nav, clone its links into mobile menu for convenience
+(function cloneNavLinks() {
+  const sourceNav = document.querySelector('.navbar nav, .main-nav, .site-nav'); // common selectors
+  const targetList = mobileMenu.querySelector('.mobile-menu-list');
+  if (sourceNav && targetList && targetList.children.length === 0) {
+    // Find anchor links inside sourceNav
+    sourceNav.querySelectorAll('a').forEach(a => {
+      const li = document.createElement('li');
+      const anchor = a.cloneNode(true);
+      anchor.removeAttribute('id'); // avoid duplicate ids
+      li.appendChild(anchor);
+      targetList.appendChild(li);
+    });
+  }
+})();
+
+const openMenu = () => {
+  mobileMenu.classList.add('open');
+  mobileMenu.setAttribute('aria-hidden', 'false');
+  // prevent page scroll
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+};
+const closeMenu = () => {
+  mobileMenu.classList.remove('open');
+  mobileMenu.setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+};
+
+// hook hamburger button(s)
+document.querySelectorAll('.hamburger, .mobile-toggle').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    if (mobileMenu.classList.contains('open')) closeMenu();
+    else openMenu();
+  });
+});
+
+// close buttons and backdrop
+mobileMenu.addEventListener('click', (e) => {
+  if (e.target.matches('[data-close]') || e.target.closest('.mobile-menu-close')) {
+    closeMenu();
+  }
+});
+
+// close on ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+});
           </script>
 </body>
 </html>
