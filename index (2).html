@@ -1567,6 +1567,31 @@
   /* Also ensure hero doesn't have forced min-heights elsewhere */
   .hero, .hero-content, .hero-media { min-height: 0 !important; height: auto !important; }
 }
+  /* Mobile navbar tweaks: hide email, soften background, keep hamburger visible */
+@media (max-width: 768px) {
+  /* remove the email on small screens */
+  .nav-email {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* soften the navbar so it doesn't feel like a heavy white bar over hero/carousel */
+  .navbar {
+    background: rgba(255,255,255,0.88) !important; /* slightly translucent */
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border-bottom: 1px solid rgba(17,17,17,0.06) !important;
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+  }
+
+  /* keep hamburger visible and tappable */
+  .hamburger { display: block !important; z-index: 1300 !important; }
+}
   
   </style>
 </head>
@@ -1613,8 +1638,10 @@
       <div class="hamburger" aria-label="Open mobile menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span><span></span><span></span>
       </div>
-
+<!-- Mobile menu container required by the hamburger script -->
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true"></div>
   </nav>
+          
 <!-- HERO (replace existing block) -->
 <section class="hero" id="hero" aria-label="Hero">
   <div class="carousel-container" aria-hidden="false">
