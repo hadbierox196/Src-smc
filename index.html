@@ -1567,7 +1567,128 @@
   /* Also ensure hero doesn't have forced min-heights elsewhere */
   .hero, .hero-content, .hero-media { min-height: 0 !important; height: auto !important; }
 }
-  
+
+  :root {
+  --header-height: 64px;      /* adjust if your header is taller */
+  --offcanvas-width: 300px;
+}
+
+/* ===== Header (fixed) ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.95); /* slightly translucent so it doesn't feel heavy */
+  z-index: 1100;                      /* high so it sits above hero, but below offcanvas overlay */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* ensure main content isn't hidden under the fixed header */
+body { padding-top: var(--header-height); box-sizing: border-box; }
+
+/* inner layout */
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+/* brand/logo */
+.brand-logo { height: calc(var(--header-height) - 16px); display: block; }
+
+/* desktop nav (visible on larger screens) */
+.top-nav { margin-left: auto; display: none; }
+.top-nav ul { list-style: none; margin: 0; padding: 0; display:flex; gap: 18px; align-items:center; }
+.top-nav a { text-decoration: none; font-weight:600; color:#222; }
+
+/* hamburger (mobile) */
+.hamburger {
+  display: inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  padding:0;
+}
+.hamburger-box { display:inline-block; width:26px; height:18px; position:relative; }
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  display:block; background:#222; height:2px; width:100%; border-radius:2px; position:absolute; left:0; transition: transform .25s ease, opacity .2s ease;
+}
+.hamburger-inner { top:50%; transform: translateY(-50%); }
+.hamburger-inner::before { content:""; top:-8px; }
+.hamburger-inner::after { content:""; bottom:-8px; }
+
+/* hamburger active state (X) */
+.hamburger.is-active .hamburger-inner { transform: rotate(45deg); }
+.hamburger.is-active .hamburger-inner::before { transform: rotate(90deg) translateX(0); top:0; }
+.hamburger.is-active .hamburger-inner::after { opacity:0; }
+
+/* ===== Off-canvas menu ===== */
+.offcanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--offcanvas-width);
+  max-width: 90%;
+  height: 100%;
+  transform: translateX(-110%);
+  transition: transform .32s cubic-bezier(.2,.9,.3,1);
+  background: #fff;
+  z-index: 1200;
+  box-shadow: 2px 0 20px rgba(2,6,23,0.18);
+  overflow-y: auto;
+}
+
+/* when open */
+.offcanvas.open { transform: translateX(0); }
+.offcanvas-inner { padding: 18px; }
+.offcanvas-title { margin: 8px 0 14px; font-size: 1.1rem; }
+
+/* backdrop overlay */
+.offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+}
+.offcanvas-backdrop.visible { opacity: 1; pointer-events: auto; }
+
+/* close button */
+.offcanvas-close { font-size: 28px; border: 0; background: transparent; cursor: pointer; position: absolute; right: 10px; top: 8px; }
+
+/* mobile nav links */
+.offcanvas-nav ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.offcanvas-nav a { display:block; padding: 10px 6px; text-decoration: none; color: #111; font-weight:700; border-radius:6px; }
+
+/* Responsive: show top-nav on wider screens and hide hamburger */
+@media (min-width: 900px) {
+  .hamburger { display: none; }
+  .top-nav { display:block; }
+  .offcanvas, .offcanvas-backdrop { display: none; }
+}
+
+/* small-screen tune: reduce header height so hero fits better */
+@media (max-width: 420px) {
+  :root { --header-height: 56px; }
+  .brand-logo { height: calc(var(--header-height) - 14px); }
+  body { padding-top: var(--header-height); }
+                   }
   </style>
 </head>
 <body>
@@ -1608,12 +1729,48 @@
     <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
   </svg>
 </a>
-      </div>
+        </div>
+<!-- ===== Fixed header + off-canvas menu ===== -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-controls="offcanvas" aria-expanded="false" aria-label="Open menu">
+      <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+    </button>
 
-      <div class="hamburger" aria-label="Open mobile menu" aria-controls="mobileMenu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </div>
+    <a href="#home" class="brand" aria-label="Home">
+      <!-- keep your logo img or inline svg -->
+      <img src="https://i.imgur.com/fk6vI3L.png" alt="Logo" class="brand-logo">
+    </a>
 
+    <nav class="top-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="#admission">Admission</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Off-canvas menu (left) -->
+<aside id="offcanvas" class="offcanvas" role="dialog" aria-hidden="true" aria-labelledby="offcanvasTitle">
+  <div class="offcanvas-inner">
+    <button class="offcanvas-close" id="offcanvasClose" aria-label="Close menu">&times;</button>
+    <h2 id="offcanvasTitle" class="offcanvas-title">Menu</h2>
+    <nav class="offcanvas-nav" role="navigation" aria-label="Mobile navigation">
+      <ul>
+        <li><a href="#home" data-close>Home</a></li>
+        <li><a href="#admission" data-close>Admission</a></li>
+        <li><a href="#about" data-close>About Us</a></li>
+        <li><a href="#projects" data-close>Projects</a></li>
+        <li><a href="#contact" data-close>Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<!-- overlay behind off-canvas menu -->
+<div id="offcanvasBackdrop" class="offcanvas-backdrop" aria-hidden="true"></div>
   </nav>
 <!-- HERO (replace existing block) -->
 <section class="hero" id="hero" aria-label="Hero">
@@ -2315,6 +2472,59 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
   window.addEventListener('load', ensureDomainsStart);
   window.addEventListener('orientationchange', ensureDomainsStart);
   window.addEventListener('resize', function(){ setTimeout(ensureDomainsStart, 120); });
+})();
+          </script>
+          <script>
+(function () {
+  const hamburger = document.getElementById('hamburger');
+  const offcanvas = document.getElementById('offcanvas');
+  const closeBtn = document.getElementById('offcanvasClose');
+  const backdrop = document.getElementById('offcanvasBackdrop');
+
+  function openMenu() {
+    offcanvas.classList.add('open');
+    backdrop.classList.add('visible');
+    hamburger.classList.add('is-active');
+    hamburger.setAttribute('aria-expanded','true');
+    offcanvas.setAttribute('aria-hidden','false');
+    // prevent body scroll
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    offcanvas.classList.remove('open');
+    backdrop.classList.remove('visible');
+    hamburger.classList.remove('is-active');
+    hamburger.setAttribute('aria-expanded','false');
+    offcanvas.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
+  // Toggle on hamburger click
+  hamburger.addEventListener('click', function (e) {
+    const isOpen = offcanvas.classList.contains('open');
+    if (!isOpen) openMenu(); else closeMenu();
+  });
+
+  // Close events
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+
+  // Close when tapping a nav link in the offcanvas (for SPA nav)
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', function () {
+      closeMenu();
+    });
+  });
+
+  // Handle escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && offcanvas.classList.contains('open')) {
+      closeMenu();
+    }
+  });
 })();
           </script>
 </body>
