@@ -1951,6 +1951,137 @@
 @media (max-width: 420px) {
   .domain-card { flex: 0 0 88%; min-width: 88%; max-width: 88%; height: 360px; }
 }
+
+    /* ===== Domains: use flexbox for perfect centering of the last row ===== */
+.domains-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.6rem 1rem;
+  box-sizing: border-box;
+
+  /* Flex layout: wrap items and center them as a row / rows */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* THIS ensures last partial row is centered */
+  gap: 1.25rem;
+}
+
+/* Card: equal sizes, centered content */
+.domain-card {
+  /* Fixed logical card width so wrapping is predictable */
+  flex: 0 0 300px;   /* card width on desktop (tweak as needed) */
+  width: 300px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* center horizontally */
+  text-align: center;
+  padding: 1.25rem;
+  min-height: 320px;       /* equal visual height across cards */
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.95));
+  border: 1px solid rgba(17,17,17,0.06);
+  box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* Optional: stronger override if some global rule forces width:100% on article */
+.domains-grid > .domain-card {
+  flex: 0 0 300px !important;
+  width: 300px !important;
+}
+
+/* Make inner content expand so button sits at bottom neatly */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* Headings and paragraph */
+.domain-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary, #1e40af);
+}
+
+.domain-card p {
+  margin: 0;
+  color: var(--ink-soft, #444);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 0 0.25rem;
+}
+
+/* Apply button styling */
+.apply-btn {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.58rem 1rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--primary, #1e40af), color-mix(in srgb, var(--primary, #1e40af) 80%));
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.12);
+  align-self: center;
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.domain-card:hover { transform: translateY(-6px); }
+.apply-btn:hover, .apply-btn:focus { transform: translateY(-3px); }
+
+/* ===== Mobile: keep horizontal scroll + snapping behavior ===== */
+@media (max-width: 768px) {
+  .domains-grid {
+    /* horizontal single-row scrollable container */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    justify-content: flex-start; /* natural L-to-R scroll on mobile */
+    align-items: stretch;
+  }
+
+  .domain-card {
+    flex: 0 0 82%;    /* visible card width on mobile (tweak peek) */
+    min-width: 82%;
+    max-width: 82%;
+    width: auto;      /* let min-width control */
+    height: 380px;    /* equal height on mobile */
+    scroll-snap-align: center;
+    margin: 0;
+  }
+
+  /* optional scrollbar visuals */
+  .domains-grid { scrollbar-width: thin; }
+  .domains-grid::-webkit-scrollbar { height: 9px; }
+  .domains-grid::-webkit-scrollbar-track { background: transparent; }
+  .domains-grid::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 999px; }
+
+  /* Ensure mobile allows horizontal scroll (remove any global overflow-x:hidden if present) */
+  html, body { overflow-x: visible !important; }
+}
+
+/* Slight tweak for very narrow phones */
+@media (max-width: 420px) {
+  .domain-card { flex: 0 0 88%; min-width: 88%; max-width: 88%; height: 360px; }
+}
+
+/* Accessibility focus */
+.domain-card:focus {
+  outline: 3px solid color-mix(in srgb, var(--primary, #1e40af) 30%, white);
+  outline-offset: 4px;
+}
     
 </style></head>
 <body>
