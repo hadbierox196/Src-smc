@@ -2517,6 +2517,31 @@ copyright { margin:0; }
     gap: 6px;
   }
 }
+    /* Footer wrapper */
+.site-footer {
+  background: #000;   /* make the entire footer black */
+  color: #fff;
+  font-family: inherit;
+}
+
+/* The column area inherits the black background from .site-footer */
+.footer-inner {
+  background: transparent; /* keep columns black (inherits from parent) */
+}
+
+/* Ensure footer text stays visible on dark background */
+.footer-text,
+.footer-heading {
+  color: #fff;
+}
+.footer-text a {
+  color: #d1d5db;
+  text-decoration: none;
+}
+.footer-text a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
     
 </style></head>
 <body>
