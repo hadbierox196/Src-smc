@@ -1687,6 +1687,147 @@
     overflow-x: hidden !important;
   }
 }
+    /* ----------------- Domains: desktop grid ----------------- */
+.domains-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+  padding: 0.6rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Card: equal height, centered content */
+.domain-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* center vertically */
+  text-align: center;
+  padding: 1.25rem;
+  min-height: 320px; /* equal height */
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.95));
+  border: 1px solid rgba(17,17,17,0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
+}
+
+.domain-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Make sure content area grows to keep button at bottom if content is short */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  flex: 1 1 auto;
+}
+
+/* Heading and paragraph */
+.domain-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--primary, #1e40af);
+  font-weight: 800;
+}
+
+.domain-card p {
+  margin: 0;
+  color: var(--ink-soft, #444);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 0 0.25rem;
+}
+
+/* Apply button */
+.apply-btn {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.58rem 1rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--primary, #1e40af), color-mix(in srgb, var(--primary, #1e40af) 80%));
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.12);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.14s ease;
+  align-self: center;
+}
+
+/* Button hover / focus */
+.apply-btn:hover,
+.apply-btn:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.14);
+  opacity: 0.98;
+}
+
+/* ----------------- Mobile: horizontal scroll + snapping ----------------- */
+@media (max-width: 768px) {
+  /* Allow horizontal scrolling container on mobile */
+  .domains-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.6rem 1rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    align-items: stretch;
+  }
+
+  /* Each card becomes a snap item with fixed width (equal visible size) */
+  .domain-card {
+    flex: 0 0 82%;          /* visible width of each card — tweak as needed (70%-92%) */
+    min-width: 82%;
+    max-width: 82%;
+    scroll-snap-align: center;
+    margin: 0;
+    height: 380px;          /* locked equal height on mobile too */
+  }
+
+  /* Make sure Apply button stays visible at bottom of card */
+  .card-content { padding-bottom: 0.6rem; }
+
+  /* Small visual scrollbar improvements (optional) */
+  .domains-grid {
+    scrollbar-width: thin;  /* Firefox */
+  }
+  .domains-grid::-webkit-scrollbar {
+    height: 9px;
+  }
+  .domains-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .domains-grid::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.12);
+    border-radius: 999px;
+  }
+
+  /* If you previously had global overflow-x hidden, ensure mobile allows it.
+     If you're certain you removed that rule from your stylesheet, you can omit the next two lines. */
+  html, body { overflow-x: visible !important; }
+}
+
+/* Accessibility focus outline */
+.domain-card:focus {
+  outline: 3px solid color-mix(in srgb, var(--primary, #1e40af) 30%, white);
+  outline-offset: 4px;
+}
+
+/* Small screens / very narrow: make cards slightly narrower so two-edge peek possible */
+@media (max-width: 420px) {
+  .domain-card { flex: 0 0 88%; min-width: 88%; max-width: 88%; height: 360px; }
+}
+    
 </style></head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
