@@ -2592,6 +2592,59 @@ html.has-fixed-header {
     /* keep hidden by default on mobile as well */
   }
 }
+    /* ========== Header base (hidden by default on desktop) ========== */
+.site-header,
+.navbar,
+.header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-110%); /* hidden above viewport by default */
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 220ms ease, box-shadow 220ms ease;
+  z-index: 9999;
+  pointer-events: none;   /* disable interactions while hidden */
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Visible state for desktop/tablet: slide down, semi-transparent */
+.site-header.visible,
+.navbar.visible,
+.header-bar.visible {
+  transform: translateY(0);
+  pointer-events: auto;
+  background: rgba(255,255,255,0.72); /* tweak 0.5 - 0.85 as needed */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+}
+
+/* Ensure header elements are interactive when visible */
+.site-header.visible a,
+.site-header.visible .logo,
+.site-header.visible .nav-link {
+  pointer-events: auto;
+}
+
+/* ========== MOBILE OVERRIDE: header always visible ========== */
+@media (max-width: 768px) {
+  .site-header,
+  .navbar,
+  .header-bar {
+    transform: translateY(0) !important;        /* always shown on mobile */
+    pointer-events: auto !important;            /* allow taps */
+    background: rgba(255,255,255,0.72) !important; /* semi-transparent default on mobile */
+    -webkit-backdrop-filter: blur(6px) !important;
+    backdrop-filter: blur(6px) !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+}
+
+/* If header is fixed and overlaps content, add top padding to body/html
+   ONLY if you need it — adjust the value to match your header height. */
+/* html.has-fixed-header { padding-top: 64px; } */
     
 </style></head>
 <body>
@@ -3329,23 +3382,31 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMenu();
 });
-</script>
     <script>
 (function () {
-  // CONFIG
-  const headerSelector = '.site-header'; // change if your header has a different selector
-  const showAfterY = 40;                 // minimum scrollY before header is allowed to appear
-  const idleTimeout = 800;               // ms to wait after scrolling stops to hide the header
-                                         // increase if you want the header to remain longer
+  const headerSelector = '.site-header'; // update if your header uses a different selector
+  const showAfterY = 40;                 // minimum scrollY before header can appear on desktop
+  const idleTimeout = 800;               // ms to hide after scrolling stops (desktop only)
 
-  // state
   const header = document.querySelector(headerSelector);
-  if (!header) return; // no header found — nothing to do
+  if (!header) return;
 
+  // On small screens, keep header visible and don't attach scroll show/hide
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  if (isMobile()) {
+    header.classList.add('visible'); // ensure visible on load on mobile
+    // Also remove any transform inline styles that might hide it
+    header.style.transform = '';
+    return; // do not attach desktop scroll handler on mobile
+  }
+
+  // Desktop scroll behavior (show while scrolling down past threshold, hide otherwise)
   let lastY = window.scrollY;
   let ticking = false;
   let visible = false;
-  let lastScrollTime = 0;
   let idleTimer = null;
 
   function setVisible(on) {
@@ -3355,22 +3416,17 @@ document.addEventListener('keydown', e => {
   }
 
   function onScroll() {
-    lastScrollTime = Date.now();
-
     if (!ticking) {
       window.requestAnimationFrame(() => {
         const currentY = window.scrollY || 0;
         const scrollingDown = currentY > lastY;
         const passedThreshold = currentY > showAfterY;
 
-        // Show header only when user scrolls down AND they've scrolled past the threshold
         if (scrollingDown && passedThreshold) {
           setVisible(true);
-          // clear any idle hide timer and set a new one so header disappears after user stops
           if (idleTimer) clearTimeout(idleTimer);
           idleTimer = setTimeout(() => setVisible(false), idleTimeout);
         } else {
-          // hide while scrolling up or when above threshold
           setVisible(false);
         }
 
@@ -3381,15 +3437,24 @@ document.addEventListener('keydown', e => {
     }
   }
 
-  // Hide on load (ensure class not present)
+  // Start hidden
   header.classList.remove('visible');
 
-  // Attach scroll listener
+  // Attach listeners for desktop
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Also hide on resize/orientation change to avoid layout glitches
-  window.addEventListener('resize', () => setVisible(false));
+  // If user resizes to mobile, switch to mobile mode (keep header visible)
+  window.addEventListener('resize', () => {
+    if (isMobile()) {
+      header.classList.add('visible');
+      // remove desktop listener if you like (optional):
+      // window.removeEventListener('scroll', onScroll);
+    } else {
+      header.classList.remove('visible'); // reset when going back to desktop
+    }
+  });
 })();
-    </script>
+</script>
+</script>
 </script></body>
 </html>
