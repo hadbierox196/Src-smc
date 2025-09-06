@@ -2542,6 +2542,56 @@ copyright { margin:0; }
   color: #fff;
   text-decoration: underline;
 }
+    /* Header: hidden by default, slides in when .visible is added */
+.site-header,
+.navbar,
+.header-bar {
+  position: fixed;       /* keep it at top when visible */
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-110%); /* hide above viewport */
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 220ms ease, box-shadow 220ms ease;
+  z-index: 9999;
+  pointer-events: none;  /* prevent clicks when hidden */
+  background: transparent;/* no background when hidden */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Visible state: slide down, allow interactions, semi-transparent background */
+.site-header.visible,
+.navbar.visible,
+.header-bar.visible {
+  transform: translateY(0);
+  pointer-events: auto;
+  background: rgba(255,255,255,0.72); /* tweak opacity 0.5-0.85 */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+}
+
+/* If the header contains dark text/icons, force their colors for contrast */
+.site-header.visible .logo,
+.site-header.visible .nav-link,
+.site-header.visible .btn {
+  color: #111; /* or whatever color you want on the semi-transparent bg */
+}
+
+/* Keep space for fixed header by adding top padding to body if header is overlapping content.
+   Adjust the value according to your header height (e.g., 64px). */
+html.has-fixed-header {
+  padding-top: 64px; /* only add this if your header is fixed and should not overlap content */
+}
+
+/* Optional: ensure mobile behavior is the same — override earlier rules if needed */
+@media (max-width: 768px) {
+  .site-header,
+  .navbar,
+  .header-bar {
+    /* keep hidden by default on mobile as well */
+  }
+}
     
 </style></head>
 <body>
@@ -3280,5 +3330,66 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMenu();
 });
 </script>
+    <script>
+(function () {
+  // CONFIG
+  const headerSelector = '.site-header'; // change if your header has a different selector
+  const showAfterY = 40;                 // minimum scrollY before header is allowed to appear
+  const idleTimeout = 800;               // ms to wait after scrolling stops to hide the header
+                                         // increase if you want the header to remain longer
+
+  // state
+  const header = document.querySelector(headerSelector);
+  if (!header) return; // no header found — nothing to do
+
+  let lastY = window.scrollY;
+  let ticking = false;
+  let visible = false;
+  let lastScrollTime = 0;
+  let idleTimer = null;
+
+  function setVisible(on) {
+    if (on === visible) return;
+    visible = on;
+    header.classList.toggle('visible', on);
+  }
+
+  function onScroll() {
+    lastScrollTime = Date.now();
+
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentY = window.scrollY || 0;
+        const scrollingDown = currentY > lastY;
+        const passedThreshold = currentY > showAfterY;
+
+        // Show header only when user scrolls down AND they've scrolled past the threshold
+        if (scrollingDown && passedThreshold) {
+          setVisible(true);
+          // clear any idle hide timer and set a new one so header disappears after user stops
+          if (idleTimer) clearTimeout(idleTimer);
+          idleTimer = setTimeout(() => setVisible(false), idleTimeout);
+        } else {
+          // hide while scrolling up or when above threshold
+          setVisible(false);
+        }
+
+        lastY = currentY;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  // Hide on load (ensure class not present)
+  header.classList.remove('visible');
+
+  // Attach scroll listener
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Also hide on resize/orientation change to avoid layout glitches
+  window.addEventListener('resize', () => setVisible(false));
+})();
+    </script>
 </script></body>
 </html>
