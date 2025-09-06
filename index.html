@@ -2375,6 +2375,148 @@ copyright { margin:0; }
     text-align: center;
   }
 }
+    /* ---------- Mobile header translucency (drop into main CSS, last) ---------- */
+/* Target your real header selector: .navbar, .site-header, .header-bar etc.
+   If your header uses a different class, replace .site-header below. */
+
+.site-header,
+.navbar,
+.header-bar {
+  background: #ffffff;            /* default fallback */
+  transition: background 200ms ease, backdrop-filter 200ms ease;
+  z-index: 999;                   /* keep it above the carousel */
+}
+
+/* Desktop: keep solid white or whatever you already have */
+@media (min-width: 769px) {
+  .site-header,
+  .navbar,
+  .header-bar {
+    background: #ffffff;          /* keep current desktop behavior */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Mobile: semi-transparent and slightly blurred so carousel shows through */
+@media (max-width: 768px) {
+  .site-header,
+  .navbar,
+  .header-bar {
+    background: rgba(255,255,255,0.65);   /* reduce opacity: tweak 0.5 - 0.85 */
+    -webkit-backdrop-filter: blur(6px);   /* iOS Safari */
+    backdrop-filter: blur(6px);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+}
+
+/* If some global style is forcing a solid background, use a stronger selector.
+   Use !important only if necessary. */
+@media (max-width: 768px) {
+  header.site-header,
+  .site-header.navbar,
+  .header-bar.site-header {
+    background: rgba(255,255,255,0.65) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    backdrop-filter: blur(6px) !important;
+  }
+}
+
+/* If your header is fixed, make sure the page content isn't hidden under it */
+.site-header.fixed,
+.navbar.fixed,
+.header-bar.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Ensure you have body padding if header is fixed: */
+  /* body { padding-top: <header-height>; } */
+}
+    /* ---------- Footer layout ---------- */
+.site-footer {
+  background: transparent; /* keep top area visually consistent if you want a background image / gradient */
+  color: #fff;
+  font-family: inherit;
+}
+
+/* main container for the columns */
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 16px 24px; /* top & sides; bottom smaller to visually separate from bottom strip */
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+/* columns */
+.footer-col { text-align: left; }
+
+/* headings/text */
+.footer-heading { margin: 0 0 12px; font-size: 1.05rem; font-weight: 800; color: #fff; }
+.footer-text { margin: 0 0 10px; color: #d1d5db; line-height: 1.55; font-size: 0.98rem; }
+
+/* social pills (small examples) */
+.footer-socials { margin-top: 12px; display:flex; gap:10px; }
+.social-link {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  background: linear-gradient(180deg,#6d28d9,#5b21b6);
+  color:#fff;text-decoration:none;font-weight:700;font-size:0.9rem;
+}
+
+/* Form styling */
+.footer-form { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.footer-form input, .footer-form textarea {
+  width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03); color:#fff; font-size:0.95rem; box-sizing:border-box;
+}
+.footer-form input::placeholder, .footer-form textarea::placeholder { color: rgba(255,255,255,0.65); }
+.footer-form input:focus, .footer-form textarea:focus { outline:none; box-shadow:0 6px 18px rgba(79,70,229,0.12); border-color: rgba(79,70,229,0.9); }
+
+.footer-send-btn {
+  background: linear-gradient(180deg,#4f46e5,#4338ca); color:#fff;
+  border:none; padding:10px 14px; border-radius:8px; font-weight:700; cursor:pointer;
+}
+.footer-send-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(67,56,202,0.16); }
+
+/* ---------- Footer bottom (black strip) ---------- */
+.footer-bottom {
+  background: #000;               /* full-width black background */
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 0;
+  margin-top: 0;
+}
+
+.footer-bottom-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  color: #9ca3af;
+}
+
+.footer-bottom-inner a { color: var(--primary, #7c3aed); text-decoration: none; font-weight:600; }
+.footer-bottom-inner a:hover { text-decoration: underline; }
+
+/* Responsive: stack columns and center bottom strip text */
+@media (max-width: 900px) {
+  .footer-inner { grid-template-columns: 1fr; padding: 32px 16px; }
+  .footer-bottom-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+}
     
 </style></head>
 <body>
@@ -2568,7 +2710,7 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
       <h4 class="footer-heading">About</h4>
       <p class="footer-text">
         Fostering a culture of research, innovation, and academic excellence.
-Equip future healthcare professionals with the skills, ethics, and confidence to lead impactful research in medicine and public health.
+        Equip future healthcare professionals with the skills, ethics, and confidence to lead impactful research in medicine and public health.
       </p>
       <div class="footer-socials" aria-label="social links">
         <a href="#" class="social-link" aria-label="LinkedIn">IN</a>
@@ -2580,8 +2722,8 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
     <div class="footer-col footer-contact">
       <h4 class="footer-heading">Contact</h4>
       <p class="footer-text"><strong>Email:</strong> <a href="mailto:official.srcsmc@gmail.com">official.srcsmc@gmail.com</a></p>
-      <p class="footer-text"><strong>Phone:</strong>(048) 9232004</p>
-      <p class="footer-text"><strong>Address:</strong>2P3F+H7J, Faisalabad Rd, Sargodha</p>
+      <p class="footer-text"><strong>Phone:</strong> (048) 9232004</p>
+      <p class="footer-text"><strong>Address:</strong> 2P3F+H7J, Faisalabad Rd, Sargodha</p>
     </div>
 
     <!-- Column 3: Send a Message -->
@@ -2602,16 +2744,23 @@ Equip future healthcare professionals with the skills, ethics, and confidence to
     </div>
   </div>
 
+  <!-- Footer bottom: black full-width strip containing copyright & designed-by -->
   <div class="footer-bottom">
-    <div class="footer-inner footer-bottom-inner">
+    <div class="footer-bottom-inner">
+      <p class="copyright">
+        © <span id="footer-year"></span> SMC SRC. All Rights Reserved.
+      </p>
+      <p class="designed-by">
+        Designed by <a href="https://portfolios-five-ivory.vercel.app/" target="_blank" rel="noopener noreferrer">Hassan Farooq</a>
+      </p>
     </div>
   </div>
-    </footer>
-<div class="copyright">
-<!-- Updated copyright with designer credit -->
-<p>© 2025 SMC SRC. All Rights Reserved. Designed by <a href="https://portfolios-five-ivory.vercel.app/" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;" target="_blank">Hassan Farooq</a></p>
-</div>
 </footer>
+
+<script>
+  // Auto-update footer year
+  (function(){ const el = document.getElementById('footer-year'); if(el) el.textContent = new Date().getFullYear(); })();
+</script>
 </div>
 <button aria-label="Scroll to top" class="scroll-top" id="scrollTop" onclick="scrollToTop()">
 <svg aria-hidden="true" fill="none" viewbox="0 0 24 24">
