@@ -2542,91 +2542,6 @@ copyright { margin:0; }
   color: #fff;
   text-decoration: underline;
 }
-    /* Header: hidden by default, slides in when .visible is added */
-.site-header,
-.navbar,
-.header-bar {
-  position: fixed;       /* keep it at top when visible */
-  top: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(-110%); /* hide above viewport */
-  transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 220ms ease, box-shadow 220ms ease;
-  z-index: 9999;
-  pointer-events: none;  /* prevent clicks when hidden */
-  background: transparent;/* no background when hidden */
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-/* Visible state: slide down, allow interactions, semi-transparent background */
-.site-header.visible,
-.navbar.visible,
-.header-bar.visible {
-  transform: translateY(0);
-  pointer-events: auto;
-  background: rgba(255,255,255,0.72); /* tweak opacity 0.5-0.85 */
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
-}
-
-/* If the header contains dark text/icons, force their colors for contrast */
-.site-header.visible .logo,
-.site-header.visible .nav-link,
-.site-header.visible .btn {
-  color: #111; /* or whatever color you want on the semi-transparent bg */
-}
-
-/* Keep space for fixed header by adding top padding to body if header is overlapping content.
-   Adjust the value according to your header height (e.g., 64px). */
-html.has-fixed-header {
-  padding-top: 64px; /* only add this if your header is fixed and should not overlap content */
-}
-
-/* Optional: ensure mobile behavior is the same — override earlier rules if needed */
-@media (max-width: 768px) {
-  .site-header,
-  .navbar,
-  .header-bar {
-    /* keep hidden by default on mobile as well */
-  }
-}
-    /* ========== Header base (hidden by default on desktop) ========== */
-.site-header,
-.navbar,
-.header-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(-110%); /* hidden above viewport by default */
-  transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 220ms ease, box-shadow 220ms ease;
-  z-index: 9999;
-  pointer-events: none;   /* disable interactions while hidden */
-  background: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-/* Visible state for desktop/tablet: slide down, semi-transparent */
-.site-header.visible,
-.navbar.visible,
-.header-bar.visible {
-  transform: translateY(0);
-  pointer-events: auto;
-  background: rgba(255,255,255,0.72); /* tweak 0.5 - 0.85 as needed */
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
-}
-
-/* Ensure header elements are interactive when visible */
-.site-header.visible a,
-.site-header.visible .logo,
-.site-header.visible .nav-link {
-  pointer-events: auto;
-}
 
 /* ========== MOBILE OVERRIDE: header always visible ========== */
 @media (max-width: 768px) {
@@ -2642,6 +2557,41 @@ html.has-fixed-header {
   }
 }
 
+    :root {
+  /* default header height — adjust to match your white bar */
+  --top-bar-height: 56px;
+}
+
+/* Mobile-specific */
+@media (max-width: 768px) {
+  /* push main content down so fixed header doesn't overlap */
+  .site-content, /* whatever wrapper holds your carousel */ 
+  .carousel-container {
+    padding-top: calc(var(--top-bar-height) + env(safe-area-inset-top));
+  }
+
+  /* make carousel shorter and images contained */
+  .carousel-container {
+    aspect-ratio: unset;        /* use max-height instead */
+    height: auto;
+    /* subtract header height so visible area is roughly half the screen */
+    max-height: calc(48vh - var(--top-bar-height));
+    overflow: hidden;
+  }
+
+  .carousel-slide img {
+    object-fit: contain !important;    /* prevents image overflow */
+    max-height: calc(48vh - var(--top-bar-height)) !important;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Ensure hero/min-height rules won't force overlap */
+  .hero, .hero-content, .hero-media {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+}
 /* If header is fixed and overlaps content, add top padding to body/html
    ONLY if you need it — adjust the value to match your header height. */
 /* html.has-fixed-header { padding-top: 64px; } */
@@ -3382,79 +3332,7 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMenu();
 });
-    <script>
-(function () {
-  const headerSelector = '.site-header'; // update if your header uses a different selector
-  const showAfterY = 40;                 // minimum scrollY before header can appear on desktop
-  const idleTimeout = 800;               // ms to hide after scrolling stops (desktop only)
-
-  const header = document.querySelector(headerSelector);
-  if (!header) return;
-
-  // On small screens, keep header visible and don't attach scroll show/hide
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  if (isMobile()) {
-    header.classList.add('visible'); // ensure visible on load on mobile
-    // Also remove any transform inline styles that might hide it
-    header.style.transform = '';
-    return; // do not attach desktop scroll handler on mobile
-  }
-
-  // Desktop scroll behavior (show while scrolling down past threshold, hide otherwise)
-  let lastY = window.scrollY;
-  let ticking = false;
-  let visible = false;
-  let idleTimer = null;
-
-  function setVisible(on) {
-    if (on === visible) return;
-    visible = on;
-    header.classList.toggle('visible', on);
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const currentY = window.scrollY || 0;
-        const scrollingDown = currentY > lastY;
-        const passedThreshold = currentY > showAfterY;
-
-        if (scrollingDown && passedThreshold) {
-          setVisible(true);
-          if (idleTimer) clearTimeout(idleTimer);
-          idleTimer = setTimeout(() => setVisible(false), idleTimeout);
-        } else {
-          setVisible(false);
-        }
-
-        lastY = currentY;
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }
-
-  // Start hidden
-  header.classList.remove('visible');
-
-  // Attach listeners for desktop
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // If user resizes to mobile, switch to mobile mode (keep header visible)
-  window.addEventListener('resize', () => {
-    if (isMobile()) {
-      header.classList.add('visible');
-      // remove desktop listener if you like (optional):
-      // window.removeEventListener('scroll', onScroll);
-    } else {
-      header.classList.remove('visible'); // reset when going back to desktop
-    }
-  });
-})();
-</script>
+   
 </script>
 </script></body>
 </html>
